@@ -189,9 +189,21 @@ export const authOptions: NextAuthOptions = {
         profile: profile?.email 
       })
       
+      // ✅ 测试用户判断放在最前面，在导入任何模块之前
+      if (user?.id === 'test-user-id') {
+        console.log('✅ 测试用户登录，跳过数据库操作')
+        return true
+      }
+      
       try {
         if (user?.email) {
           console.log('🔍 开始处理用户:', user.email)
+          
+          // 检查必要的环境变量是否存在
+          if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+            console.error('❌ Supabase环境变量未配置，跳过数据库操作')
+            return true // 即使没有配置数据库，也允许用户登录
+          }
           
           // 🔧 使用Supabase替代Prisma，确保数据库访问一致性
           const { createAdminClient } = await import('@/lib/supabase/server')
