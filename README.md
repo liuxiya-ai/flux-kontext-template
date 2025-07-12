@@ -1,5 +1,25 @@
 # 🎨 FluxKontext.space - AI图像生成平台
 
+## 🚀 最新更新日志
+
+### 2025-01-20 - 测试模式功能添加
+- ✅ **新增测试模式功能**: 在 `ArchitectureGenerator.tsx` 中添加了测试模式按钮
+- ✅ **绕过网络限制**: 使用 fal.ai 官方测试图片URL (`https://v3.fal.media/files/rabbit/rmgBxhwGYb2d3pl3x9sKf_output.png`) 来绕过 ngrok 访问限制
+- ✅ **调试功能增强**: 添加了详细的控制台日志输出，便于调试 API 调用过程
+- ✅ **用户体验优化**: 提供了两种生成方式 - 正常模式（使用用户上传图片）和测试模式（使用官方测试图片）
+
+### 2025-01-20 - 网络问题诊断与解决
+- ✅ **Ngrok 隧道配置**: 成功配置 ngrok 公共隧道，解决 localhost 无法被外部服务访问的问题
+- ✅ **环境变量配置**: 配置 `NEXT_PUBLIC_APP_URL` 环境变量，支持动态 URL 切换
+- ✅ **API 路由修复**: 修复了 Next.js App Router 中动态路由参数的使用错误
+- ✅ **图片上传下载**: 完善了图片上传和下载的完整流程
+
+### 2025-01-20 - fal.ai API 集成
+- ✅ **Flux Kontext API**: 成功集成 fal.ai 的 Flux Pro Kontext API
+- ✅ **建筑风格生成**: 支持多种建筑风格和类型的 AI 图像生成
+- ✅ **参数配置**: 支持自定义提示词、纵横比、生成质量等参数
+- ✅ **错误处理**: 完善的错误处理和用户反馈机制
+
 ## 📋 项目概览
 
 **FluxKontext.space** 是一个基于Next.js 15的现代化AI图像生成平台，集成了Cloudflare Turnstile安全验证、Stripe支付系统、Supabase数据库和多语言支持。
@@ -439,7 +459,7 @@ FluxKontext.space是一个功能完整的AI图像生成平台，具有：
 如需技术支持或有任何问题，请查看：
 - 📄 PAYMENT_SECURITY_GUIDE.md - 支付安全指南
 - 📄 env.example - 环境变量配置示例
-- 📁 scripts/ - 各种检查和设置脚本
+- 📁 scripts/ - 各种检查和设置脚本 
 
 ## 🏗️ 建筑效果图生成功能
 

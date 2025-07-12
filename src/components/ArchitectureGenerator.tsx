@@ -175,6 +175,64 @@ export function ArchitectureGenerator() {
     }
   }
   
+  // 测试模式生成（使用fal.ai官方测试图片）
+  const generateImageTestMode = async () => {
+    if (!session) {
+      setError("请先登录再生成效果图")
+      return
+    }
+    
+    // 组合提示词
+    const finalPrompt = generateArchitecturePrompt(style, buildingType, customPrompt)
+    
+    setIsGenerating(true)
+    setError("")
+    
+    try {
+      // 使用fal.ai官方测试图片URL，绕过ngrok问题
+      const testImageUrl = "https://v3.fal.media/files/rabbit/rmgBxhwGYb2d3pl3x9sKf_output.png"
+      
+      console.log("🧪 测试模式: 使用fal.ai官方测试图片")
+      console.log("测试图片URL:", testImageUrl)
+      console.log("生成提示词:", finalPrompt)
+      
+      // 调用生成API
+      const response = await fetch("/api/architecture-generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          prompt: finalPrompt,
+          image_url: testImageUrl,
+          aspect_ratio: aspectRatio,
+          tier: tier,
+          num_images: 1
+        })
+      })
+      
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "生成失败")
+      }
+      
+      const data = await response.json()
+      
+      if (!data.images || data.images.length === 0) {
+        throw new Error("未能生成效果图")
+      }
+      
+      // 设置生成结果
+      setGeneratedImage(data.images[0])
+      
+    } catch (error) {
+      console.error("测试模式生成错误:", error)
+      setError(error instanceof Error ? error.message : "测试模式生成过程中发生错误")
+    } finally {
+      setIsGenerating(false)
+    }
+  }
+  
   // 下载生成的图片
   const downloadImage = () => {
     if (!generatedImage?.url) return
@@ -336,6 +394,26 @@ export function ArchitectureGenerator() {
                 <>
                   <Wand2 className="mr-2 h-4 w-4" />
                   生成效果图
+                </>
+              )}
+            </Button>
+
+            {/* 测试模式按钮 */}
+            <Button 
+              onClick={generateImageTestMode} 
+              disabled={isGenerating}
+              variant="outline"
+              className="w-full"
+            >
+              {isGenerating ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  测试中...
+                </>
+              ) : (
+                <>
+                  <Wand2 className="mr-2 h-4 w-4" />
+                  🧪 测试模式（使用官方测试图片）
                 </>
               )}
             </Button>

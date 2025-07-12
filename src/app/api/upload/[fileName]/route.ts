@@ -1,46 +1,52 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-// 引用同一个内存存储
+// 临时使用内存存储上传的图片URL
+// 在实际生产环境中，应该使用云存储服务如S3、Cloudinary等
 declare global {
   var UPLOADED_IMAGES: Record<string, string> | undefined
 }
 
-// 获取上传的图片
+// 确保在多个文件间共享同一个实例
+global.UPLOADED_IMAGES = global.UPLOADED_IMAGES || {}
+
 export async function GET(
   request: NextRequest,
-  { params }: { params: { fileName: string } }
+  context: { params: { fileName: string } }
 ) {
+  const fileName = context.params.fileName
+
   try {
-    const fileName = params.fileName
-
-    console.log(`🔍 请求图片文件: ${fileName}`)
-
-    // 从内存中获取图片数据
-    const UPLOADED_IMAGES = global.UPLOADED_IMAGES || {}
-    
-    if (!fileName || !UPLOADED_IMAGES[fileName]) {
-      console.log(`❌ 图片不存在: ${fileName}`)
-      console.log(`📋 可用的图片文件:`, Object.keys(UPLOADED_IMAGES))
-      return new NextResponse('图片不存在', { status: 404 })
+    if (!fileName) {
+      return NextResponse.json({ error: '缺少文件名' }, { status: 400 })
     }
 
-    const dataUrl = UPLOADED_IMAGES[fileName]
-    const [meta, base64] = dataUrl.split(',')
-    const contentType = meta.split(':')[1].split(';')[0]
+    const dataUrl = global.UPLOADED_IMAGES?.[fileName]
+
+    if (!dataUrl) {
+      console.error(`❌ 在内存存储中找不到图片: ${fileName}`)
+      return NextResponse.json({ error: '找不到图片文件' }, { status: 404 })
+    }
+
+    console.log(`✅ 找到图片: ${fileName}, 准备发送...`)
     
-    const buffer = Buffer.from(base64, 'base64')
-    
-    console.log(`✅ 成功返回图片: ${fileName}, 类型: ${contentType}, 大小: ${buffer.length}字节`)
-    
+    // 从 data: URL 中分离出MIME类型和base64数据
+    const parts = dataUrl.split(';base64,')
+    const mimeType = parts[0].split(':')[1]
+    const base64Data = parts[1]
+
+    // 将base64解码为Buffer
+    const buffer = Buffer.from(base64Data, 'base64')
+
+    // 返回图片响应
     return new NextResponse(buffer, {
+      status: 200,
       headers: {
-        'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=31536000',
-        'Access-Control-Allow-Origin': '*'
-      }
+        'Content-Type': mimeType,
+        'Content-Length': buffer.length.toString(),
+      },
     })
   } catch (error) {
-    console.error('获取图片失败:', error)
-    return new NextResponse('服务器错误', { status: 500 })
+    console.error(`获取图片 ${fileName} 出错:`, error)
+    return NextResponse.json({ error: '获取图片失败' }, { status: 500 })
   }
 } 

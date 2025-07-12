@@ -57,7 +57,7 @@ export async function POST(request: NextRequest) {
     // 生成唯一文件名，确保扩展名正确
     const originalExt = file.name.split('.').pop()?.toLowerCase() || 'png'
     const fileName = `${uuidv4()}-${Date.now()}.${originalExt}`
-
+    
     // 在实际应用中，这里应该将文件上传到云存储
     // 例如使用AWS S3、Cloudinary等
     // 以下代码仅用于演示，将文件转为base64并存储在内存中
@@ -77,7 +77,7 @@ export async function POST(request: NextRequest) {
       success: true,
       url: imageUrl,
       fileName,
-      contentType: file.type,
+        contentType: file.type,
       size: file.size
     })
 
