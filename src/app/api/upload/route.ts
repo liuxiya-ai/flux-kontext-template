@@ -1,104 +1,91 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { r2Storage } from '@/lib/services/r2-storage'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@/lib/auth'
+import { v4 as uuidv4 } from 'uuid'
 
-// 支持的文件类型配置
-const SUPPORTED_TYPES = {
-  image: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
-  video: ['video/mp4', 'video/webm', 'video/quicktime'],
-  audio: ['audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/mp3'],
-  document: ['application/pdf', 'text/plain', 'application/json']
+// 临时使用内存存储上传的图片URL
+// 在实际生产环境中，应该使用云存储服务如S3、Cloudinary等
+declare global {
+  var UPLOADED_IMAGES: Record<string, string> | undefined
 }
 
-// 文件大小限制 (MB)
-const SIZE_LIMITS = {
-  image: 10,
-  video: 100,
-  audio: 50,
-  document: 5
-}
+global.UPLOADED_IMAGES = global.UPLOADED_IMAGES || {}
 
 export async function POST(request: NextRequest) {
   try {
-    // 检查R2是否启用
-    if (process.env.NEXT_PUBLIC_ENABLE_R2 !== 'true') {
-      return NextResponse.json({
-        success: false,
-        error: 'R2存储服务未启用'
-      }, { status: 503 })
+    // 验证用户身份
+    const session = await getServerSession(authOptions)
+    if (!session?.user?.email) {
+      return NextResponse.json(
+        { error: '请先登录再上传图片' },
+        { status: 401 }
+      )
     }
 
+    // 解析multipart/form-data
     const formData = await request.formData()
-    const file = formData.get('file') as File
-    const mediaType = formData.get('mediaType') as string || 'image'
-    const purpose = formData.get('purpose') as string || 'general' // 用途：character, music, video, general
+    const file = formData.get('file') as File | null
 
     if (!file) {
-      return NextResponse.json({
-        success: false,
-        error: '未选择文件'
-      }, { status: 400 })
+      return NextResponse.json(
+        { error: '没有找到上传的文件' },
+        { status: 400 }
+      )
     }
 
     // 验证文件类型
-    const supportedTypes = SUPPORTED_TYPES[mediaType as keyof typeof SUPPORTED_TYPES]
-    if (!supportedTypes || !supportedTypes.includes(file.type)) {
-      return NextResponse.json({
-        success: false,
-        error: `不支持的${mediaType}文件类型: ${file.type}`
-      }, { status: 400 })
+    if (!file.type.startsWith('image/')) {
+      return NextResponse.json(
+        { error: '只允许上传图片文件' },
+        { status: 400 }
+      )
     }
 
-    // 验证文件大小
-    const maxSize = SIZE_LIMITS[mediaType as keyof typeof SIZE_LIMITS] * 1024 * 1024
+    // 验证文件大小 (限制为10MB)
+    const maxSize = 10 * 1024 * 1024 // 10MB
     if (file.size > maxSize) {
-      return NextResponse.json({
-        success: false,
-        error: `文件大小超过限制 (最大 ${SIZE_LIMITS[mediaType as keyof typeof SIZE_LIMITS]}MB)`
-      }, { status: 400 })
+      return NextResponse.json(
+        { error: '文件大小不能超过10MB' },
+        { status: 400 }
+      )
     }
 
-    // 生成文件路径
-    const timestamp = Date.now()
-    const randomId = Math.random().toString(36).substring(2, 8)
-    const extension = file.name.split('.').pop()
-    const fileName = `${purpose}_${timestamp}_${randomId}.${extension}`
+    // 读取文件内容
+    const bytes = await file.arrayBuffer()
+    const buffer = Buffer.from(bytes)
+
+    // 生成唯一文件名，确保扩展名正确
+    const originalExt = file.name.split('.').pop()?.toLowerCase() || 'png'
+    const fileName = `${uuidv4()}-${Date.now()}.${originalExt}`
+
+    // 在实际应用中，这里应该将文件上传到云存储
+    // 例如使用AWS S3、Cloudinary等
+    // 以下代码仅用于演示，将文件转为base64并存储在内存中
+    const base64 = buffer.toString('base64')
+    const dataUrl = `data:${file.type};base64,${base64}`
     
-    // 根据用途和媒体类型生成路径
-    const filePath = `${mediaType}s/${purpose}/${fileName}`
+    // 存储在全局内存中（仅用于演示）
+    global.UPLOADED_IMAGES![fileName] = dataUrl
+    
+    console.log(`📁 图片上传成功: ${fileName}, 大小: ${file.size}字节, 类型: ${file.type}`)
 
-    // 上传到R2
-    const uploadResult = await r2Storage.uploadFile(file)
+    // 构建访问URL
+    const imageUrl = `/api/upload/${fileName}`
 
+    // 返回上传成功的响应
     return NextResponse.json({
       success: true,
-      data: {
-        url: uploadResult,
-        key: filePath,
-        filename: fileName,
-        size: file.size,
-        contentType: file.type,
-        mediaType: mediaType,
-        purpose: purpose
-      }
+      url: imageUrl,
+      fileName,
+      contentType: file.type,
+      size: file.size
     })
 
-  } catch (error: unknown) {
-    console.error('Upload error:', error)
+  } catch (error) {
+    console.error('文件上传错误:', error)
     return NextResponse.json(
-      { 
-        success: false, 
-        message: error instanceof Error ? error.message : 'Upload failed' 
-      },
+      { error: '文件上传失败' },
       { status: 500 }
     )
   }
-}
-
-// 支持的HTTP方法
-export async function GET() {
-  return NextResponse.json({
-    message: 'Upload API - 使用POST方法上传文件',
-    supportedTypes: SUPPORTED_TYPES,
-    sizeLimits: SIZE_LIMITS
-  })
 } 
