@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // 临时使用内存存储上传的图片URL
 // 在实际生产环境中，应该使用云存储服务如S3、Cloudinary等
 declare global {
+  // eslint-disable-next-line no-var
   var UPLOADED_IMAGES: Record<string, string> | undefined
 }
 
@@ -11,9 +12,9 @@ global.UPLOADED_IMAGES = global.UPLOADED_IMAGES || {}
 
 export async function GET(
   request: NextRequest,
-  context: { params: { fileName: string } }
+  { params }: { params: Promise<{ fileName: string }> }
 ) {
-  const fileName = context.params.fileName
+  const { fileName } = await params
 
   try {
     if (!fileName) {

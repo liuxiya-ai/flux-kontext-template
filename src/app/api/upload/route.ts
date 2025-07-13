@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 // 临时使用内存存储上传的图片URL
 // 在实际生产环境中，应该使用云存储服务如S3、Cloudinary等
 declare global {
+  // eslint-disable-next-line no-var
   var UPLOADED_IMAGES: Record<string, string> | undefined
 }
 

@@ -73,24 +73,30 @@ export function ArchitectureGenerator() {
   
   // 上传图片到服务器
   const uploadImage = async (file: File): Promise<string> => {
-    // 创建FormData对象
-    const formData = new FormData()
-    formData.append("file", file)
-    
     try {
-      const response = await fetch("/api/upload", {
-        method: "POST",
-        body: formData
+      console.log("📤 开始上传图片到云存储:", file.name)
+      
+      // 🔧 使用云存储API而不是本地内存存储
+      const response = await fetch("/api/flux-kontext", {
+        method: "PUT",
+        body: (() => {
+          const formData = new FormData()
+          formData.append("file", file)
+          return formData
+        })()
       })
       
       if (!response.ok) {
-        throw new Error("图片上传失败")
+        const errorData = await response.json()
+        throw new Error(errorData.message || "图片上传失败")
       }
       
       const data = await response.json()
+      console.log("✅ 图片上传成功，云存储URL:", data.url)
       return data.url
+      
     } catch (error) {
-      console.error("上传错误:", error)
+      console.error("❌ 图片上传错误:", error)
       throw new Error("图片上传失败，请重试")
     }
   }
@@ -114,31 +120,19 @@ export function ArchitectureGenerator() {
     setError("")
     
     try {
-      // 1. 上传图片到服务器
+      // 🔧 上传图片到云存储获取公网URL
       let imageUrl = uploadedImageUrl
       
-      // 如果是本地blob URL，需要先上传到服务器
+      // 如果是本地blob URL，需要先上传到云存储
       if (uploadedImageUrl.startsWith("blob:")) {
+        console.log("📤 检测到本地图片，上传到云存储...")
         imageUrl = await uploadImage(uploadedFile)
+        console.log("✅ 云存储URL:", imageUrl)
       }
       
-      // 确保图片URL是完整的URL
-      if (imageUrl.startsWith("/")) {
-        // 如果是相对路径，转换为完整URL
-        // 优先使用环境变量中配置的公开URL（例如ngrok），否则回退到浏览器当前地址
-        const ngrokUrl = process.env.NEXT_PUBLIC_APP_URL;
-        console.log("环境变量NEXT_PUBLIC_APP_URL:", ngrokUrl);
-        
-        const baseUrl = ngrokUrl || window.location.origin;
-        imageUrl = `${baseUrl}${imageUrl}`
-        
-        console.log("最终使用的baseUrl:", baseUrl);
-        console.log("完整的图片URL:", imageUrl);
-      }
+      console.log("🚀 使用图片URL调用生成API:", imageUrl)
       
-      console.log("发送到API的图片URL:", imageUrl)
-      
-      // 2. 调用生成API
+      // 调用生成API
       const response = await fetch("/api/architecture-generate", {
         method: "POST",
         headers: {

@@ -54,10 +54,10 @@ if (process.env.NEXT_PUBLIC_AUTH_CREDENTIALS_ENABLED === "true") {
           return null
         }
 
-        // 🎯 开发环境测试账户（无需数据库）
-        if (process.env.NODE_ENV === 'development' && 
-            credentials.email === "test@example.com" && 
+        // 🎯 测试账户（开发和生产环境都可用，便于功能测试）
+        if (credentials.email === "test@example.com" && 
             credentials.password === "password") {
+          console.log('✅ 测试用户登录成功')
           return {
             id: "test-user-id",
             email: "test@example.com",
@@ -66,45 +66,51 @@ if (process.env.NEXT_PUBLIC_AUTH_CREDENTIALS_ENABLED === "true") {
         }
 
         // 🚀 生产环境：使用Supabase认证（自带邮箱验证）
-        try {
-          const supabase = createClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.SUPABASE_SERVICE_ROLE_KEY!
-          )
+        // 只有在配置了Supabase时才尝试使用
+        if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+          try {
+            const supabase = createClient(
+              process.env.NEXT_PUBLIC_SUPABASE_URL!,
+              process.env.SUPABASE_SERVICE_ROLE_KEY!
+            )
 
-          // 🔐 Supabase登录验证（自动检查邮箱验证状态）
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: credentials.email,
-            password: credentials.password,
-          })
+            // 🔐 Supabase登录验证（自动检查邮箱验证状态）
+            const { data, error } = await supabase.auth.signInWithPassword({
+              email: credentials.email,
+              password: credentials.password,
+            })
 
-          if (error) {
-            console.log('登录失败:', error.message)
+            if (error) {
+              console.log('登录失败:', error.message)
+              return null
+            }
+
+            if (!data.user) {
+              console.log('用户不存在')
+              return null
+            }
+
+            // ✅ 检查邮箱验证状态
+            if (!data.user.email_confirmed_at) {
+              console.log('邮箱未验证')
+              return null
+            }
+
+            // 🎉 登录成功
+            return {
+              id: data.user.id,
+              email: data.user.email!,
+              name: data.user.user_metadata?.name || data.user.email!,
+            }
+
+          } catch (error) {
+            console.error('Supabase认证错误:', error)
             return null
           }
-
-          if (!data.user) {
-            console.log('用户不存在')
-            return null
-          }
-
-          // ✅ 检查邮箱验证状态
-          if (!data.user.email_confirmed_at) {
-            console.log('邮箱未验证')
-            return null
-          }
-
-          // 🎉 登录成功
-          return {
-            id: data.user.id,
-            email: data.user.email!,
-            name: data.user.user_metadata?.name || data.user.email!,
-          }
-
-        } catch (error) {
-          console.error('Supabase认证错误:', error)
-          return null
         }
+
+        // 如果没有匹配的认证方式，返回null
+        return null
       },
     })
   )
@@ -134,7 +140,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: 'lax',        // 🔧 设置为lax而非strict，支持第三方登录
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NODE_ENV === 'production' ? 'fluxkontext.space' : undefined, // 🌐 明确指定域名
+        // 🔧 移除域名限制，让NextAuth自动处理
       },
     },
     callbackUrl: {
@@ -143,7 +149,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: 'lax',        // 🔧 支持跨站点回调
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NODE_ENV === 'production' ? 'fluxkontext.space' : undefined,
+        // 🔧 移除域名限制
       },
     },
     csrfToken: {
@@ -153,7 +159,7 @@ export const authOptions: NextAuthOptions = {
         sameSite: 'lax',        // 🔧 支持CSRF保护但允许第三方登录
         path: '/',
         secure: process.env.NODE_ENV === 'production',
-        domain: process.env.NODE_ENV === 'production' ? 'fluxkontext.space' : undefined,
+        // 🔧 移除域名限制
       },
     },
     // 🔧 添加状态Cookie配置以支持Google One Tap
@@ -165,7 +171,7 @@ export const authOptions: NextAuthOptions = {
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         maxAge: 900, // 15分钟
-        domain: process.env.NODE_ENV === 'production' ? 'fluxkontext.space' : undefined,
+        // 🔧 移除域名限制
       },
     },
     pkceCodeVerifier: {
@@ -176,7 +182,7 @@ export const authOptions: NextAuthOptions = {
         path: '/',
         secure: process.env.NODE_ENV === 'production',
         maxAge: 900, // 15分钟
-        domain: process.env.NODE_ENV === 'production' ? 'fluxkontext.space' : undefined,
+        // 🔧 移除域名限制
       },
     },
   },
