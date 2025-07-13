@@ -1,6 +1,21 @@
-# 🎨 FluxKontext.space - AI图像生成平台
+# 🎨 FluxKontext.space - AI建筑效果图生成平台
 
-## 🚀 最新更新日志
+## 🚀 最新部署信息 (Vercel)
+
+- **生产环境URL**: [https://flux-kontext-template-two.vercel.app/](https://flux-kontext-template-two.vercel.app/)
+- **最新部署时间**: 2025-07-13
+- **状态**: ✅ **运行中** - 核心功能已修复并可访问。
+
+### 修复摘要 (2025-07-13)
+- ✅ **统一图片上传**: 修复了建筑效果图生成器 (`ArchitectureGenerator`) 的图片上传逻辑，现在统一使用 `FAL` 云存储，彻底解决了因 `localhost` 网络访问限制导致的问题。
+- ✅ **修复生产环境登录**: 修正了 `auth.ts` 中的 `cookie` 域名配置，确保在 Vercel 生产环境下用户可以正常登录和保持会话。
+- ✅ **优化API路由**: 将图片上传 (`/api/upload`) 和图片访问 (`/api/upload/[fileName]`) 的逻辑分离到不同的路由文件中，使架构更清晰。
+- ✅ **模板云存储说明**: 明确了项目模板自带 `R2` 和 `FAL` 双重云存储配置，用户只需配置 `FAL_KEY` 即可使用完整的图片上传和生成功能。
+- ✅ **Vercel配置**: 移除了 `vercel.json` 中不必要的 `regions` 配置，以适配免费版Vercel的部署规则。
+
+---
+
+## 📖 更新日志
 
 ### 2025-01-20 - 测试模式功能添加
 - ✅ **新增测试模式功能**: 在 `ArchitectureGenerator.tsx` 中添加了测试模式按钮
