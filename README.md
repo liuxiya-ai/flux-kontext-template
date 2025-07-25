@@ -1,21 +1,99 @@
 # 🎨 FluxKontext.space - AI建筑效果图生成平台
 
-## 🚀 最新部署信息 (Vercel)
+## 🚀 最新状态 (2025-07-25)
 
-- **生产环境URL**: [https://flux-kontext-template-two.vercel.app/](https://flux-kontext-template-two.vercel.app/)
-- **最新部署时间**: 2025-07-13
-- **状态**: ✅ **运行中** - 核心功能已修复并可访问。
+- **核心变更**: **真实数据库认证**
+- **当前状态**: ✅ **已启用 Supabase 真实用户认证**
+- **摘要**: 项目已从硬编码的测试账户模式，成功升级为连接到真实的 Supabase 数据库。用户现在可以通过注册、邮箱验证、登录，体验完整的认证流程。
 
-### 修复摘要 (2025-07-13)
-- ✅ **统一图片上传**: 修复了建筑效果图生成器 (`ArchitectureGenerator`) 的图片上传逻辑，现在统一使用 `FAL` 云存储，彻底解决了因 `localhost` 网络访问限制导致的问题。
-- ✅ **修复生产环境登录**: 修正了 `auth.ts` 中的 `cookie` 域名配置，确保在 Vercel 生产环境下用户可以正常登录和保持会话。
-- ✅ **优化API路由**: 将图片上传 (`/api/upload`) 和图片访问 (`/api/upload/[fileName]`) 的逻辑分离到不同的路由文件中，使架构更清晰。
-- ✅ **模板云存储说明**: 明确了项目模板自带 `R2` 和 `FAL` 双重云存储配置，用户只需配置 `FAL_KEY` 即可使用完整的图片上传和生成功能。
-- ✅ **Vercel配置**: 移除了 `vercel.json` 中不必要的 `regions` 配置，以适配免费版Vercel的部署规则。
+### 本次更新修复的关键问题
+- ✅ **数据库连接**: 成功打通应用与 Supabase 数据库的连接。
+- ✅ **环境变量加载**: 修复了因缓存导致的环境变量读取失败问题。
+- ✅ **本地网络阻塞**: 解决了本地防火墙/安全软件导致的网络请求被拒绝问题。
+- ✅ **认证逻辑修复**: 移除了 `src/lib/auth.ts` 中硬编码的测试账户逻辑。
+
+---
+
+## 🚀 快速上手指南
+
+本项目已经配置为使用 **Supabase** 作为后端数据库和认证服务。要成功在本地运行，请遵循以下步骤：
+
+### 1. 克隆项目
+```bash
+git clone https://github.com/liuxiya-ai/flux-kontext-template.git
+cd flux-kontext-template
+```
+
+### 2. 安装依赖
+```bash
+npm install
+```
+
+### 3. 配置环境变量 (关键步骤)
+你需要一个自己的 Supabase 项目来获取必要的环境变量。
+
+- **创建 Supabase 项目**: 访问 [supabase.com](https://supabase.com) 创建一个新项目。
+- **获取 API 密钥**: 在你的 Supabase 项目后台，进入 `Project Settings > API`。
+- **创建 `.env.local` 文件**: 在项目根目录下，复制 `env.example` 并重命名为 `.env.local`。
+- **填入核心变量**: 将以下变量填入你的 `.env.local` 文件，并确保值是**从 Supabase 官网复制的完整值**。
+
+```env
+# .env.local
+
+# =============================================================================
+# 🚀 核心服务配置
+# =============================================================================
+
+# FAL AI API密钥 (用于AI图像生成)
+FAL_KEY=your_fal_api_key_here
+
+# =============================================================================
+# 🗄️ 数据库与认证配置 (从你的Supabase项目获取)
+# =============================================================================
+
+# Supabase 数据库连接字符串 (在 Supabase后台 Project Settings > Database 中找到)
+DATABASE_URL=your_supabase_database_connection_string
+
+# Supabase API (在 Supabase后台 Project Settings > API 中找到)
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_public_key
+SUPABASE_SERVICE_ROLE_KEY=your_supabase_service_role_secret_key
+
+# =============================================================================
+# 🔐 NextAuth.js 身份认证配置
+# =============================================================================
+
+# 你的本地开发URL
+NEXTAUTH_URL=http://localhost:3000
+
+# 生成一个安全的随机字符串 (例如: openssl rand -base64 32)
+NEXTAUTH_SECRET=your_secure_random_string_for_nextauth
+
+# =============================================================================
+# ⚙️ 功能开关
+# =============================================================================
+NEXT_PUBLIC_AUTH_CREDENTIALS_ENABLED=true
+NEXT_PUBLIC_AUTH_GOOGLE_ENABLED=false
+NEXT_PUBLIC_AUTH_GITHUB_ENABLED=false
+```
+
+### 4. 启动本地开发服务器
+```bash
+npm run dev
+```
+
+### 5. 开始使用！
+- 访问 `http://localhost:3000/auth/signup` 来注册你的第一个真实用户。
+- 检查你的邮箱以获取验证链接。
+- 验证后，即可登录并开始使用！
 
 ---
 
 ## 📖 更新日志
+
+### 2025-07-25 - 真实数据库认证升级
+- ✅ **认证系统升级**: 项目从测试账户模式切换到 Supabase 真实用户认证。
+- ✅ **修复数据库连接**: 解决了环境变量、本地网络防火墙等一系列问题。
 
 ### 2025-01-20 - 测试模式功能添加
 - ✅ **新增测试模式功能**: 在 `ArchitectureGenerator.tsx` 中添加了测试模式按钮
