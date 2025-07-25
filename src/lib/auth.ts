@@ -54,62 +54,51 @@ if (process.env.NEXT_PUBLIC_AUTH_CREDENTIALS_ENABLED === "true") {
           return null
         }
 
-        // 🎯 测试账户（开发和生产环境都可用，便于功能测试）
-        if (credentials.email === "test@example.com" && 
-            credentials.password === "password") {
-          console.log('✅ 测试用户登录成功')
-          return {
-            id: "test-user-id",
-            email: "test@example.com",
-            name: "Test User",
-          }
-        }
-
         // 🚀 生产环境：使用Supabase认证（自带邮箱验证）
         // 只有在配置了Supabase时才尝试使用
         if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-          try {
-            const supabase = createClient(
-              process.env.NEXT_PUBLIC_SUPABASE_URL!,
-              process.env.SUPABASE_SERVICE_ROLE_KEY!
-            )
+        try {
+          const supabase = createClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL!,
+            process.env.SUPABASE_SERVICE_ROLE_KEY!
+          )
 
-            // 🔐 Supabase登录验证（自动检查邮箱验证状态）
-            const { data, error } = await supabase.auth.signInWithPassword({
-              email: credentials.email,
-              password: credentials.password,
-            })
+          // 🔐 Supabase登录验证（自动检查邮箱验证状态）
+          const { data, error } = await supabase.auth.signInWithPassword({
+            email: credentials.email,
+            password: credentials.password,
+          })
 
-            if (error) {
-              console.log('登录失败:', error.message)
-              return null
-            }
-
-            if (!data.user) {
-              console.log('用户不存在')
-              return null
-            }
-
-            // ✅ 检查邮箱验证状态
-            if (!data.user.email_confirmed_at) {
-              console.log('邮箱未验证')
-              return null
-            }
-
-            // 🎉 登录成功
-            return {
-              id: data.user.id,
-              email: data.user.email!,
-              name: data.user.user_metadata?.name || data.user.email!,
-            }
-
-          } catch (error) {
-            console.error('Supabase认证错误:', error)
+          if (error) {
+            console.log('登录失败:', error.message)
             return null
           }
+
+          if (!data.user) {
+            console.log('用户不存在')
+            return null
+          }
+
+          // ✅ 检查邮箱验证状态
+          if (!data.user.email_confirmed_at) {
+            console.log('邮箱未验证')
+            return null
+          }
+
+          // 🎉 登录成功
+          return {
+            id: data.user.id,
+            email: data.user.email!,
+            name: data.user.user_metadata?.name || data.user.email!,
+          }
+
+        } catch (error) {
+          console.error('Supabase认证错误:', error)
+          return null
+        }
         }
 
-        // 如果没有匹配的认证方式，返回null
+        // 如果没有配置Supabase或者认证失败，返回null
         return null
       },
     })
@@ -194,12 +183,6 @@ export const authOptions: NextAuthOptions = {
         account: account?.provider, 
         profile: profile?.email 
       })
-      
-      // ✅ 测试用户判断放在最前面，在导入任何模块之前
-      if (user?.id === 'test-user-id') {
-        console.log('✅ 测试用户登录，跳过数据库操作')
-        return true
-      }
       
       try {
         if (user?.email) {
