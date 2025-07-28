@@ -1,0 +1,45 @@
+{
+  "signIn": {
+    "title": "登录您的账户",
+    "description": "欢迎回来！请登录以继续。",
+    "forgotPassword": "忘记密码？",
+    "noAccount": "还没有账户？",
+    "orContinueWith": "或使用邮箱继续",
+    "signInToExisting": "登录现有账户",
+    "createNewAccount": "创建新账户"
+  },
+  "signUp": {
+    "title": "创建您的账户",
+    "description": "加入数千名创作者，使用AI生成令人惊艳的建筑效果图。",
+    "hasAccount": "已有账户？",
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "byCreatingAccount": "创建账户即表示您同意我们的",
+    "and": "和",
+    "orContinueWith": "或使用邮箱继续"
+  },
+  "errors": {
+    "oauthSignin": "OAuth登录错误，请重试",
+    "oauthCallback": "OAuth回调错误，请重试",
+    "oauthCreateAccount": "无法创建OAuth账户，请重试",
+    "emailCreateAccount": "无法创建邮箱账户，请重试",
+    "callback": "回调错误，请重试",
+    "oauthAccountNotLinked": "该邮箱已关联到其他登录方式，请使用原登录方式",
+    "emailSignin": "邮箱登录失败，请检查您的邮箱地址",
+    "credentialsSignin": "邮箱或密码错误，请重试",
+    "sessionRequired": "需要登录才能访问此页面",
+    "unknown": "登录时发生未知错误，请重试"
+  },
+  "upgrade": {
+    "title": "升级您的套餐",
+    "description": "通过我们的高级套餐解锁更多功能",
+    "currentPlan": "当前套餐",
+    "upgradeNow": "立即升级",
+    "features": {
+      "moreCredits": "更多积分",
+      "higherResolution": "更高分辨率",
+      "prioritySupport": "优先支持",
+      "commercialUse": "商业使用权"
+    }
+  }
+} 

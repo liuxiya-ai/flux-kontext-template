@@ -3,29 +3,24 @@ import { Suspense } from 'react'
 import { SignInContent } from '@/components/SignInContent'
 
 export const metadata: Metadata = {
-  title: '登录 - 访问您的AI建筑效果图生成账户 | Flux Kontext',
-  description: '登录您的Flux Kontext账户，使用AI技术生成专业建筑效果图。为建筑师和设计师提供强大的可视化工具。',
+  title: 'Sign In - Access Your AI Image Generation Account | Flux Kontext',
+  description: 'Sign in to your Flux Kontext account to access AI-powered image generation tools. Create professional images with advanced AI technology instantly.',
   keywords: [
-    '登录',
-    '用户登录',
-    'flux kontext账户',
-    'AI建筑效果图登录',
-    '建筑可视化登录',
-    '建筑设计账户',
-    'AI建筑工具登录'
+    'sign in',
+    'login',
+    'flux kontext account',
+    'ai image generator login',
+    'flux kontext sign in',
+    'image creation account',
+    'ai image generation login'
   ],
   alternates: {
     canonical: '/auth/signin',
-    languages: {
-      'en': '/en/auth/signin',
-      'zh': '/auth/signin'
-    }
   },
   openGraph: {
-    title: '登录 Flux Kontext',
-    description: '访问您的AI建筑效果图生成账户',
-    url: 'https://fluxkontext.space/auth/signin',
-    locale: 'zh_CN',
+    title: 'Sign In to Flux Kontext',
+    description: 'Access your AI image generation account',
+    url: '/auth/signin',
   },
   robots: {
     index: false, // 登录页面不需要被搜索引擎索引
@@ -40,7 +35,7 @@ function SignInLoading() {
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
           <div className="w-8 h-8 mx-auto animate-spin rounded-full border-2 border-indigo-600 border-t-transparent"></div>
-          <p className="mt-4 text-gray-600">正在加载登录页面...</p>
+          <p className="mt-4 text-gray-600">Loading sign in page...</p>
         </div>
       </div>
     </div>

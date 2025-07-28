@@ -8,10 +8,15 @@ import authData from './auth.json'
 import commonData from './common.json'
 import seoData from './seo.json'
 
+// 中文翻译文件
+import homeDataZh from './home-zh.json'
+import commonDataZh from './common-zh.json'
+import authDataZh from './auth-zh.json'
+
 // 支持的语言列表 - 14种语言
 export const SUPPORTED_LOCALES = [
-  'en',  // English (默认)
-  'zh',  // 中文
+  'zh',  // 中文 (默认)
+  'en',  // English
   'de',  // Deutsch
   'es',  // Español
   'fr',  // Français
@@ -31,7 +36,7 @@ export const SUPPORTED_LOCALES = [
 export type SupportedLocale = typeof SUPPORTED_LOCALES[number]
 
 // 默认语言
-export const DEFAULT_LOCALE: SupportedLocale = 'en'
+export const DEFAULT_LOCALE: SupportedLocale = 'zh'
 
 // 语言显示名称
 export const LOCALE_NAMES = {
@@ -83,6 +88,16 @@ const defaultContentMap = {
   seo: seoData
 } as const
 
+// 中文内容映射
+const zhContentMap = {
+  home: homeDataZh,
+  generator: generatorData, // 暂时使用英文，后续补充
+  pricing: pricingData, // 暂时使用英文，后续补充
+  auth: authDataZh,
+  common: commonDataZh,
+  seo: seoData // 暂时使用英文，后续补充
+} as const
+
 /**
  * 获取指定语言的文案内容
  * @param locale 语言代码
@@ -94,14 +109,16 @@ export function getContent(locale: string = DEFAULT_LOCALE) {
     ? (locale as SupportedLocale)
     : DEFAULT_LOCALE
     
-  // 目前只返回默认英语内容，后续可扩展多语言文件
-  if (validLocale === DEFAULT_LOCALE) {
-    return defaultContentMap
+  // 根据语言返回对应的内容
+  switch (validLocale) {
+    case 'zh':
+      return zhContentMap
+    case 'en':
+      return defaultContentMap
+    default:
+      // 其他语言暂时使用默认英语内容
+      return defaultContentMap
   }
-  
-  // TODO: 实现其他语言的动态导入
-  // 例如: import(`./locales/${validLocale}/home.json`)
-  return defaultContentMap
 }
 
 /**
@@ -132,7 +149,7 @@ export function getLocaleFromPathname(pathname: string): SupportedLocale {
  * @returns 完整的URL路径
  */
 export function getLocalizedPath(path: string, locale: SupportedLocale = DEFAULT_LOCALE): string {
-  // 如果是默认语言，不添加前缀
+  // 如果是默认语言（中文），不添加前缀
   if (locale === DEFAULT_LOCALE) {
     return path
   }
