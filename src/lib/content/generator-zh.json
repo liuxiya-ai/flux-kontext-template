@@ -1,0 +1,92 @@
+{
+  "title": "Flux Kontext AI建筑效果图生成器",
+  "description": "使用先进的AI技术创建和编辑专业的建筑效果图",
+  "subtitle": "使用我们尖端的AI建筑图像生成平台，将您的设计理念转化为令人惊艳的建筑效果图",
+  "prompts": {
+    "textToImage": "描述您想要创建的建筑图像...",
+    "editInstructions": "描述您想要在建筑图像中更改的内容...",
+    "referenceImages": "参考图像（可选）",
+    "placeholder": "一栋现代建筑，采用玻璃幕墙设计，在夕阳下呈现金色光泽..."
+  },
+  "settings": {
+    "model": "模型",
+    "aspectRatio": "画幅比例",
+    "imageCount": "图像数量",
+    "guidanceScale": "引导强度",
+    "safetyTolerance": "安全容忍度",
+    "outputFormat": "输出格式",
+    "seed": "种子值（可选）",
+    "privateMode": "私密模式",
+    "generationMode": "生成模式"
+  },
+  "models": {
+    "pro": {
+      "name": "Flux Kontext Pro",
+      "description": "快速生成，质量良好"
+    },
+    "max": {
+      "name": "Flux Kontext Max", 
+      "description": "最佳质量，生成较慢"
+    }
+  },
+  "aspectRatios": {
+    "1:1": "正方形",
+    "16:9": "横向",
+    "9:16": "纵向",
+    "4:3": "标准",
+    "3:2": "照片",
+    "21:9": "超宽"
+  },
+  "safetyLevels": {
+    "1": "最严格",
+    "2": "严格",
+    "3": "中等",
+    "4": "宽松",
+    "5": "最宽松"
+  },
+  "modes": {
+    "public": "公开",
+    "private": "私密"
+  },
+  "errors": {
+    "noPrompt": "请输入提示词",
+    "noEditPrompt": "请输入编辑提示词",
+    "noImages": "请上传要编辑的图像",
+    "invalidImage": "无效的图像格式",
+    "rateLimited": "超出速率限制",
+    "serverError": "服务器错误",
+    "uploadFailed": "文件上传失败",
+    "generationFailed": "登录开始创建！立即获得100个免费积分。",
+    "verificationFailed": "验证失败，请重试",
+    "verificationRequired": "请完成验证"
+  },
+  "features": {
+    "characterConsistency": "角色一致性",
+    "styleTransfer": "风格迁移",
+    "multiImageSupport": "多图像支持",
+    "highResolution": "高分辨率输出",
+    "commercialUse": "商业使用权",
+    "priorityProcessing": "优先处理"
+  },
+  "tips": {
+    "promptEnhancement": "使用描述性语言获得更好的结果",
+    "aspectRatioSelection": "根据预期用途选择画幅比例",
+    "modelSelection": "Pro适合速度，Max适合质量",
+    "seedUsage": "使用种子值获得可重现的结果"
+  },
+  "actions": {
+    "textToImage": "文本生成图像",
+    "editImage": "编辑图像",
+    "multiEdit": "多图像编辑",
+    "enhance": "增强",
+    "upscale": "放大"
+  },
+  "enhancementPrefixes": [
+    "专业的建筑照片 ",
+    "高质量的建筑图像 ",
+    "建筑艺术渲染 ",
+    "详细的建筑摄影 ",
+    "建筑杰作描绘 ",
+    "高端品质 "
+  ]
+} 

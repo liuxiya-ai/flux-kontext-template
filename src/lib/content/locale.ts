@@ -12,6 +12,7 @@ import seoData from './seo.json'
 import homeDataZh from './home-zh.json'
 import commonDataZh from './common-zh.json'
 import authDataZh from './auth-zh.json'
+import generatorDataZh from './generator-zh.json'
 
 // 支持的语言列表 - 14种语言
 export const SUPPORTED_LOCALES = [
@@ -91,7 +92,7 @@ const defaultContentMap = {
 // 中文内容映射
 const zhContentMap = {
   home: homeDataZh,
-  generator: generatorData, // 暂时使用英文，后续补充
+  generator: generatorDataZh,
   pricing: pricingData, // 暂时使用英文，后续补充
   auth: authDataZh,
   common: commonDataZh,
