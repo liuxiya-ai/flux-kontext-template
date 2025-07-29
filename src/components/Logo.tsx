@@ -74,7 +74,7 @@ export function Logo({
           size === "lg" && "text-2xl md:text-3xl",
           size === "xl" && "text-3xl md:text-4xl"
         )}>
-          Flux Kontext
+          AIRender
         </span>
       )}
     </div>

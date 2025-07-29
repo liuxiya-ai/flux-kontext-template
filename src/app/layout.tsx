@@ -20,27 +20,27 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Flux Kontext - AI Image Generation Platform | Professional AI Art Creator",
-    template: "%s | Flux Kontext"
+    default: "AIRender: The AI Architecture & Interior Design Render Platform",
+    template: "%s | AIRender"
   },
-  description: "Professional AI image generation platform powered by Flux Kontext. Create stunning images from text descriptions with advanced AI technology. Free AI art generator.",
+  description: "AIRender is the leading AI platform for architectural and interior design renders. Instantly transform sketches to realistic renderings, find design inspiration, and effortlessly perform post-render modifications.",
   keywords: [
-    "flux kontext",
-    "ai image generator",
-    "text to image ai",
-    "ai art generator",
-    "flux ai",
-    "image generation ai",
-    "ai art creator",
-    "flux kontext ai",
-    "professional ai images",
-    "ai image creation",
-    "flux kontext pro",
-    "flux kontext max"
+    "ai render",
+    "architectural rendering",
+    "ai architecture",
+    "interior design ai",
+    "architectural visualization",
+    "sketch to render",
+    "landscape design ai",
+    "ai for architects",
+    "Residential Design", 
+    "Commercial Buildings", 
+    "Landscape Architecture", 
+    "Architectural Renovation"
   ],
-  authors: [{ name: "Flux Kontext Team" }],
-  creator: "Flux Kontext",
-  publisher: "Flux Kontext",
+  authors: [{ name: "AIRender Team" }],
+  creator: "AIRender",
+  publisher: "AIRender",
   formatDetection: {
     email: false,
     address: false,
