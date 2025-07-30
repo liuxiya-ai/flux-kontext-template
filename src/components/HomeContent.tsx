@@ -90,11 +90,11 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* Twitter展示区域 */}
-      <TwitterShowcase />
-
       {/* Key Features Section */}
       <KeyFeatures />
+
+      {/* Twitter展示区域 */}
+      <TwitterShowcase />
 
       {/* How-to Steps Section */}
       <HowToSteps />
