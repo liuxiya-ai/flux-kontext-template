@@ -20,13 +20,13 @@ export function KeyFeatures() {
             >
               {/* 主标题 */}
               <h3 className="text-2xl md:text-3xl font-bold text-foreground mb-4">
-                {feature.title}
-              </h3>
+                    {feature.title}
+                  </h3>
               
               {/* 副标题/描述 */}
               <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
-                {feature.description}
-              </p>
+                    {feature.description}
+                  </p>
               
               {/* 示例图片 */}
               <div className="relative mb-8">
@@ -37,7 +37,7 @@ export function KeyFeatures() {
                   height={720}
                   className="w-full h-auto rounded-lg object-cover shadow-2xl mx-auto"
                 />
-              </div>
+                </div>
               
               {/* 按钮 - 移到图片下方 */}
               <div className="text-center">

@@ -2,37 +2,7 @@
   "hero": {
     "badge": "Professional AI Architecture & Interior Design Platform",
     "title": "AI Architecture Generator",
-    "description": "Best AI Render Platform for Finding inspiration, Sketch to Render, and Rendering post-modification."
-  },
-  "features": {
-    "title": "Key Features of AIRender AI Platform",
-    "description": "Our AIRender AI combines cutting-edge technology to deliver professional architectural visualization and interior design rendering in one seamless platform.",
-    "items": [
-      {
-        "title": "Sketch to Render Conversion",
-        "description": "Transform your architectural sketches into photorealistic renderings with advanced AI technology."
-      },
-      {
-        "title": "Interior Design Visualization",
-        "description": "Create stunning interior design renders with precise lighting, textures, and furniture placement."
-      },
-      {
-        "title": "Multiple Architectural Styles",
-        "description": "Generate renders in various architectural styles from modern to classical, residential to commercial."
-      },
-      {
-        "title": "Landscape Architecture",
-        "description": "Design and visualize outdoor spaces, gardens, and landscape architecture with AI precision."
-      },
-      {
-        "title": "Post-Render Modifications",
-        "description": "Fine-tune your renders with AI-powered editing for materials, lighting, and environmental effects."
-      },
-      {
-        "title": "Professional Output",
-        "description": "Export high-resolution architectural renders suitable for client presentations and project proposals."
-      }
-    ]
+    "description": "Best AI architecture rendering platform. Powered by artificial intelligence."
   },
   "howTo": {
     "title": "How to Create Architectural Renders in 4 Simple Steps",
