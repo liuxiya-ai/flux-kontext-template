@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/Navigation"
 import { TwitterShowcase } from "@/components/TwitterShowcase"
 import { KeyFeatures } from "@/components/KeyFeatures"
-import { HowToSteps } from "@/components/HowToSteps"
 import { FAQ } from "@/components/FAQ"
 import { Footer } from "@/components/Footer"
 import { OrganizationSchema, WebSiteSchema, SoftwareApplicationSchema } from "@/components/StructuredData"
@@ -95,9 +94,6 @@ export function HomeContent() {
 
       {/* Twitter展示区域 */}
       <TwitterShowcase />
-
-      {/* How-to Steps Section */}
-      <HowToSteps />
 
       {/* FAQ Section */}
       <FAQ />
