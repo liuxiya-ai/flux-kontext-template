@@ -1,37 +1,35 @@
 import type { Metadata } from 'next'
 import { Navigation } from '@/components/Navigation'
 import { Footer } from '@/components/Footer'
-import { FluxKontextGenerator } from '@/components/FluxKontextGenerator'
 import { generateMultilingualMetadata } from '@/lib/seo/metadata-generator'
+import { DesignPageContent } from '@/components/design/design-page-content'
 
 export const metadata: Metadata = generateMultilingualMetadata({
-  title: 'AI Image Generator - Flux Kontext | Create Professional Images',
-  description: 'Generate and edit professional images with Flux Kontext AI. Text-to-image generation, image editing, and multi-image processing with advanced AI technology.',
+  title: 'AI Room Design - ArchiVinci | Professional Interior & Exterior Design',
+  description:
+    'Use AI to generate, modify, and transform interior and exterior designs. Create stunning visuals from photos or text descriptions with ArchiVinci.',
   keywords: [
-    'AI image generator',
-    'Flux Kontext',
-    'text to image',
-    'image editing',
-    'AI art',
-    'professional images',
-    'image generation ai',
-    'ai art creator',
-    'flux ai generator',
-    'ai image creation',
-    'professional ai images',
-    'ai powered imaging'
+    'AI room design',
+    'interior design AI',
+    'exterior design generator',
+    'home design rendering',
+    'ArchiVinci',
+    'AI architecture',
+    'room modification',
+    'furniture placement AI',
+    'house design AI',
   ],
   path: '/generate',
-  images: ['/og-generate.png'],
+  images: ['/og-generate-design.png'],
 })
 
 export default function GeneratePage() {
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
-      
-      <main className="container mx-auto px-4 pt-24 pb-16">
-        <FluxKontextGenerator />
+
+      <main className="pt-24 pb-16">
+        <DesignPageContent />
       </main>
 
       <Footer />
