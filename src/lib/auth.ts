@@ -177,123 +177,38 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async signIn({ user, account, profile }) {
-      // 🎯 处理用户登录和首次注册赠送积分
+      // 🎯 signIn回调的职责是：
+      // 1. 记录登录事件
+      // 2. 对于第三方登录(如Google)，确保我们的公共users表里有对应记录。
+      // 对于邮箱密码登录，认证已在authorize步骤完成，这里只需放行。
+      
       console.log('🔍 signIn回调触发:', { 
         user: user, 
         account: account?.provider, 
         profile: profile?.email 
       })
       
-      try {
-        if (user?.email) {
-          console.log('🔍 开始处理用户:', user.email)
-          
-          // 检查必要的环境变量是否存在
-          if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
-            console.error('❌ Supabase环境变量未配置，跳过数据库操作')
-            return true // 即使没有配置数据库，也允许用户登录
-          }
-          
-          // 🔧 使用Supabase替代Prisma，确保数据库访问一致性
-          const { createAdminClient } = await import('@/lib/supabase/server')
-          const { getUuid } = await import('@/lib/utils/hash')
-          
-          console.log('🔍 Supabase模块导入成功')
-          
-          const supabase = createAdminClient()
-          
-          // 检查用户是否已存在
-          console.log('🔍 查询现有用户...')
-          const { data: existingUser, error: findError } = await supabase
-            .from('users')
-            .select('*')
-            .eq('email', user.email)
-            .limit(1)
-            .single()
-          
-          console.log('🔍 查询结果:', existingUser ? '用户已存在' : '用户不存在')
-
-          if (findError && findError.code === 'PGRST116') {
-            // 用户不存在，创建新用户
-            console.log('🎁 开始创建新用户...')
-            
-            const newUserData = {
-              id: user.id || getUuid(),
-              email: user.email,
-              name: user.name || user.email,
-              image: user.image || '',
-              credits: 100, // 🎁 新用户赠送100积分
-              signin_type: account?.type || 'oauth',
-              signin_provider: account?.provider || 'google',
-              signin_openid: account?.providerAccountId || '',
-              signin_ip: 'unknown',
-              last_signin_at: new Date().toISOString(),
-              signin_count: 1,
-              location: 'US',
-              preferred_currency: 'USD',
-              preferred_payment_provider: 'creem'
-            }
-
-            const { data: newUser, error: createError } = await supabase
-              .from('users')
-              .insert(newUserData)
-              .select()
-              .single()
-
-            if (createError) {
-              console.error('🚨 新用户创建失败:', createError)
-              // 即使创建失败，也允许用户登录，后续通过API自动创建
-            } else {
-              console.log('🎉 新用户创建成功:', newUser.id)
-
-              // 🎁 创建积分赠送记录
-              try {
-                await supabase
-                  .from('credit_transactions')
-                  .insert({
-                    id: getUuid(),
-                    user_id: newUser.id,
-                    amount: 100,
-                    type: 'gift',
-                    description: '新用户注册赠送积分',
-                    reference_id: 'welcome_bonus'
-                  })
-                
-                console.log(`🎁 新用户注册成功，赠送100积分: ${user.email}`)
-              } catch (creditError) {
-                console.error('⚠️ 积分记录创建失败:', creditError)
-              }
-            }
-          } else if (!findError && existingUser) {
-            console.log('🔄 更新现有用户登录信息...')
-            
-            // 🔄 现有用户：更新登录信息
-            const updateData = {
-              last_signin_at: new Date().toISOString(),
-              signin_count: (existingUser.signin_count || 0) + 1,
-              // 更新头像和昵称（如果有变化）
-              ...(user.image && { image: user.image }),
-              ...(user.name && { name: user.name }),
-            }
-
-            await supabase
-              .from('users')
-              .update(updateData)
-              .eq('id', existingUser.id)
-            
-            console.log('✅ 现有用户登录信息更新完成')
-          } else {
-            console.error('🚨 数据库查询异常:', findError)
-          }
-        } else {
-          console.log('⚠️ 用户邮箱为空，跳过数据库操作')
-        }
-      } catch (error) {
-        console.error('❌ 用户登录处理失败:', error)
-        // 即使数据库操作失败，也允许用户登录
+      // 对于'credentials'（邮箱密码）登录，authorize步骤已经处理了所有验证，
+      // 所以我们在这里直接允许通过。
+      if (account?.provider === 'credentials') {
+        console.log('✅ 邮箱密码登录，直接通过signIn。')
+        return true
       }
 
-      console.log('✅ signIn回调完成，返回true')
+      // --- 对于OAuth登录 (如Google, GitHub) 的处理逻辑 ---
+      // (这部分逻辑在未来的开发中可以被启用和完善)
+      
+      // try {
+      //   if (user?.email) {
+      //     // ... 这里可以保留或完善创建/更新第三方登录用户的逻辑 ...
+      //     // ... 例如, 将Google登录的用户信息同步到 public.users 表 ...
+      //   }
+      // } catch (error) {
+      //   console.error('❌ OAuth用户处理失败:', error)
+      //   // 即使数据库操作失败，也应允许用户登录，避免影响体验
+      // }
+
+      console.log('✅ signIn回调完成，返回true允许登录。')
       return true
     },
     async redirect({ url, baseUrl }) {

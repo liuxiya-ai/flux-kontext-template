@@ -22,7 +22,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Slider } from '@/components/ui/slider'
-import { Info } from 'lucide-react'
+import { Info, Loader2 } from 'lucide-react'
 import {
   Tooltip,
   TooltipContent,
@@ -30,17 +30,30 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { ImageUploader } from './sub-components/image-uploader'
+import { PromptInput } from './sub-components/prompt-input'
+import { SimilaritySelector } from './sub-components/similarity-selector'
+import { RoomTypeSelector } from './sub-components/room-type-selector'
+import { StyleSelector } from './sub-components/style-selector'
+import { PerformanceSlider } from './sub-components/performance-slider'
+import { AdvancedSettings } from './sub-components/advanced-settings'
+import { AspectRatioSelector } from './sub-components/aspect-ratio-selector'
 
 interface LeftPanelProps {
   state: DesignState
   setState: (newState: Partial<DesignState>) => void
   onModuleSelect: (module: DesignModule) => void
+  onGenerate: () => void // 新增：接收生成函数的类型
 }
 
 /**
  * 左侧参数控制面板，现在包含所有真实的UI控件
  */
-export function LeftPanel({ state, setState, onModuleSelect }: LeftPanelProps) {
+export function LeftPanel({
+  state,
+  setState,
+  onModuleSelect,
+  onGenerate, // 新增：接收生成函数
+}: LeftPanelProps) {
   const { selectedModule } = state
 
   // 渲染下拉菜单的函数
@@ -103,169 +116,106 @@ export function LeftPanel({ state, setState, onModuleSelect }: LeftPanelProps) {
 
       {/* 动态参数区域 */}
       <div className="space-y-6">
+        {/* 根据选定模块的配置动态渲染控件 */}
+
+        {/* 图片上传 */}
         {selectedModule.controls.requiresInputImage && (
-          <div>
-            <Label className="text-base font-semibold">Input image*</Label>
-            <div className="mt-2">
-              <ImageUploader 
-                value={state.inputImage}
-                onChange={file => setState({ inputImage: file })}
-              />
-            </div>
-          </div>
+          <ImageUploader
+            value={state.inputImage}
+            onChange={file => setState({ inputImage: file })}
+            inputTypes={selectedModule.controls.inputTypes}
+            selectedType={state.inputType}
+            onTypeChange={type => setState({ inputType: type })}
+          />
         )}
 
-        {selectedModule.controls.inputTypes &&
-          renderSelect(
-            'Input type*',
-            state.inputType,
-            value => setState({ inputType: value }),
-            selectedModule.controls.inputTypes
-          )}
+        {/* 提示词输入 */}
+        <PromptInput
+          prompt={state.prompt}
+          onPromptChange={p => setState({ prompt: p })}
+          negativePrompt={state.negativePrompt}
+          onNegativePromptChange={np => setState({ negativePrompt: np })}
+        />
 
+        {/* 相似度 */}
         {selectedModule.controls.requiresSimilarityLevel && (
-          <div>
-            <Label className="text-base font-semibold">Similarity level*</Label>
-            <ToggleGroup
-              type="single"
-              value={state.similarityLevel}
-              onValueChange={(value: DesignState['similarityLevel']) =>
-                value && setState({ similarityLevel: value })
-              }
-              className="grid grid-cols-3 mt-2"
-            >
-              <ToggleGroupItem value="similar" aria-label="Similar">
-                Similar
-              </ToggleGroupItem>
-              <ToggleGroupItem value="balanced" aria-label="Balanced">
-                Balanced
-              </ToggleGroupItem>
-              <ToggleGroupItem value="creative" aria-label="Creative">
-                Creative
-              </ToggleGroupItem>
-            </ToggleGroup>
-            <p className="text-xs text-muted-foreground mt-1">
-              <b>Precise:</b> Attention to uploaded image. <br/>
-              <b>Creative:</b> Generates flexible options.
-            </p>
-          </div>
+          <SimilaritySelector
+            value={state.similarityLevel}
+            onChange={value => setState({ similarityLevel: value })}
+          />
         )}
 
-        {selectedModule.controls.roomTypes &&
+        {/* 房间类型 */}
+        {selectedModule.controls.roomTypes && (
           renderSelect(
             'Room type*',
             state.roomType,
             value => setState({ roomType: value }),
             selectedModule.controls.roomTypes
-          )}
+          )
+        )}
 
-        {selectedModule.controls.renderStyles &&
+        {/* 渲染风格 */}
+        {selectedModule.controls.renderStyles && (
           renderSelect(
             'Render style*',
             state.renderStyle,
             value => setState({ renderStyle: value }),
             selectedModule.controls.renderStyles
-          )}
+          )
+        )}
 
+        {/* 渲染性能 */}
         {selectedModule.controls.requiresRenderPerformance && (
-           <div>
-            <Label className="text-base font-semibold">Render performance</Label>
-            <Slider
-                value={[state.renderPerformance]}
-                onValueChange={([value]) => setState({ renderPerformance: value })}
-                className="my-4"
-            />
-            <div className="flex justify-between text-xs text-muted-foreground">
-                <span>Fast render</span>
-                <span>Best quality</span>
-            </div>
-          </div>
+          <PerformanceSlider
+            value={state.renderPerformance}
+            onChange={value => setState({ renderPerformance: value })}
+          />
         )}
 
-        {/* Prompt 输入 */}
-        <div className="space-y-2">
-            <div className="flex items-center gap-2">
-                <Label htmlFor="prompt">Prompt</Label>
-                 <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger><Info className="h-4 w-4 text-muted-foreground"/></TooltipTrigger>
-                        <TooltipContent><p>Describe the image, e.g. modern villa, wooden facade...</p></TooltipContent>
-                    </Tooltip>
-                 </TooltipProvider>
-            </div>
-            <Textarea 
-                id="prompt"
-                value={state.prompt}
-                onChange={e => setState({ prompt: e.target.value })}
-                placeholder="Describe the image, e.g. modern villa, wooden facade..."
-            />
-        </div>
-        
-        {/* Negative Prompt 输入 */}
-        <div className="space-y-2">
-           <div className="flex items-center gap-2">
-                <Label htmlFor="negative-prompt">Negative prompt</Label>
-                 <TooltipProvider>
-                    <Tooltip>
-                        <TooltipTrigger><Info className="h-4 w-4 text-muted-foreground"/></TooltipTrigger>
-                        <TooltipContent><p>Remove from final render, e.g. rainy, straight lines, ...</p></TooltipContent>
-                    </Tooltip>
-                 </TooltipProvider>
-            </div>
-            <Textarea
-                id="negative-prompt"
-                value={state.negativePrompt}
-                onChange={e => setState({ negativePrompt: e.target.value })}
-                placeholder="Remove from final render, e.g. rainy, straight lines, ..."
-            />
-        </div>
-
-        {selectedModule.controls.requiresAdvancedSettings && (
-          <div className="space-y-6">
-             <div className="space-y-2">
-                <div className="flex items-center gap-2">
-                    <Label>Seed</Label>
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger><Info className="h-4 w-4 text-muted-foreground"/></TooltipTrigger>
-                            <TooltipContent><p>Enter seed number</p></TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
-                </div>
-                <div className="flex items-center space-x-2">
-                    <Checkbox id="use-seed" checked={state.seed !== null} onCheckedChange={checked => setState({ seed: checked ? 12345 : null })}/>
-                    <Input 
-                        type="number"
-                        placeholder="Enter seed number" 
-                        disabled={state.seed === null}
-                        value={state.seed || ''}
-                        onChange={e => setState({ seed: parseInt(e.target.value, 10) })}
-                    />
-                </div>
-            </div>
-            <div>
-              <Label className="text-base font-semibold">Number of images*</Label>
-               <ToggleGroup
-                type="single"
-                value={String(state.numberOfImages)}
-                onValueChange={(value) => value && setState({ numberOfImages: parseInt(value, 10) as DesignState['numberOfImages'] })}
-                className="grid grid-cols-4 mt-2"
-              >
-                <ToggleGroupItem value="1">1</ToggleGroupItem>
-                <ToggleGroupItem value="2">2</ToggleGroupItem>
-                <ToggleGroupItem value="3">3</ToggleGroupItem>
-                <ToggleGroupItem value="4">4</ToggleGroupItem>
-              </ToggleGroup>
-            </div>
-          </div>
+        {/* 新增：纵横比选择器 */}
+        {selectedModule.controls.aspectRatios && (
+          renderSelect(
+            'Aspect ratio*',
+            state.aspectRatio,
+            value => setState({ aspectRatio: value }),
+            selectedModule.controls.aspectRatios
+          )
         )}
 
-        {/* --- 生成按钮 --- */}
-        <div className="border-t border-border pt-6">
-          <Button size="lg" className="w-full text-lg font-bold">
-            Generate
-          </Button>
-        </div>
+        {/* 高级设置 (种子, 图片数量等) */}
+        {(selectedModule.controls.requiresAdvancedSettings ||
+          selectedModule.controls.requiresSeedInput ||
+          selectedModule.controls.requiresImageCount) && (
+          <AdvancedSettings
+            seed={state.seed}
+            onSeedChange={s => setState({ seed: s })}
+            numberOfImages={state.numberOfImages}
+            onNumberOfImagesChange={n => setState({ numberOfImages: n })}
+            // 根据配置决定是否显示控件
+            showSeedInput={selectedModule.controls.requiresSeedInput ?? selectedModule.controls.requiresAdvancedSettings}
+            showImageCount={selectedModule.controls.requiresImageCount ?? selectedModule.controls.requiresAdvancedSettings}
+          />
+        )}
+      </div>
+
+      {/* 生成按钮 */}
+      <div className="border-t border-border pt-6">
+        <Button
+          size="lg"
+          className="w-full text-lg font-bold"
+          onClick={onGenerate}
+          disabled={state.isGenerating} // 生成时禁用按钮
+        >
+          {state.isGenerating ? (
+            <>
+              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+              Generating...
+            </>
+          ) : (
+            'Generate'
+          )}
+        </Button>
       </div>
     </div>
   )

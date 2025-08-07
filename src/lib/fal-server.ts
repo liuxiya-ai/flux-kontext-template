@@ -29,6 +29,14 @@ export interface ArchitectureGenerationInput {
   output_format?: "jpeg" | "png";
 }
 
+// 新增：夜景生成的输入类型
+export interface NightSceneGenerationInput {
+  image_url: string;
+  aspect_ratio?: "21:9" | "16:9" | "4:3" | "3:2" | "1:1" | "2:3" | "3:4" | "9:16" | "9:21";
+  seed?: number;
+  num_images?: number;
+}
+
 export interface GeneratedImage {
   url: string;
   width?: number;
@@ -181,6 +189,71 @@ export class ArchitectureGenerationService {
           console.error("📛 API错误详情:", JSON.stringify(error.body, null, 2))
         } catch (e) {
           console.error("📛 API错误详情:", error.body)
+        }
+      }
+      
+      throw error
+    }
+  }
+}
+
+// 新增：夜景生成服务
+export class NightSceneGenerationService {
+  /**
+   * 生成夜景效果图
+   */
+  static async generate(input: NightSceneGenerationInput): Promise<GenerationResult> {
+    try {
+      console.log(`🚀 开始生成夜景效果图`)
+      
+      const processedImageUrl = validateAndProcessImageUrl(input.image_url)
+      
+      // 使用固定的prompt，但从输入接收其他参数
+      const payload: any = {
+        prompt: "(long exposure photography:1.2), (HDR:1.1), masterpiece, 8k, photorealistic. Architectural photograph of a modern building during the magical blue hour of a summer evening. The entire scene is **flooded with a harmonious blend of light**. The building's interior is **radiant**, casting powerful, warm shafts of light from its large windows. Architectural uplights and linear LEDs give the facade a **luminous, vibrant glow**. The twilight sky is not dark, but a **deep, clear indigo gradient, still bright on the horizon**. Reflections from all light sources shimmer on the wet ground, **enhancing the overall brightness and clarity**. The original photographic perspective and architectural details are strictly maintained.",
+        image_url: processedImageUrl,
+        guidance_scale: 3.5,
+        num_images: input.num_images || 1,
+        output_format: "jpeg" as const,
+      };
+
+      // 只有在提供了这些可选参数时，才将它们添加到请求体中
+      if (input.seed) {
+        payload.seed = input.seed;
+      }
+      if (input.aspect_ratio) {
+        payload.aspect_ratio = input.aspect_ratio;
+      }
+      
+      console.log("📤 发送到FAL的请求数据 (夜景):", { 
+        ...payload, 
+        prompt: payload.prompt.substring(0, 50) + '...' // 缩短日志中的prompt
+      });
+
+      const result = await fal.subscribe(ARCHITECTURE_ENDPOINTS.KONTEXT_PRO, {
+        input: payload,
+        logs: true,
+        onQueueUpdate: (update) => {
+          console.log(`📊 队列更新 (夜景):`, {
+            status: update.status,
+            position: (update as any).queue_position,
+          })
+        },
+      })
+
+      if (!result.data || !result.data.images) {
+        throw new Error('FAL API返回数据格式错误 (夜景)')
+      }
+
+      return result.data as GenerationResult
+    } catch (error: any) {
+      console.error("❌ 夜景效果图生成错误:", error)
+      
+      if (error.body) {
+        try {
+          console.error("📛 API错误详情 (夜景):", JSON.stringify(error.body, null, 2))
+        } catch (e) {
+          console.error("📛 API错误详情 (夜景):", error.body)
         }
       }
       

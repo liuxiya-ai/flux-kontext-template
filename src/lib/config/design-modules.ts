@@ -22,7 +22,16 @@ export interface ModuleControl {
   roomTypes?: SelectOption[] // 房间类型下拉菜单
   renderStyles?: SelectOption[] // 渲染风格下拉菜单
   requiresRenderPerformance?: boolean // 渲染性能滑块
-  requiresAdvancedSettings?: boolean // Seed 和 图像数量
+  
+  // 新增：支持纵横比选择
+  aspectRatios?: SelectOption[] 
+  
+  // 新增：明确要求显示种子和图片数量控件
+  requiresSeedInput?: boolean
+  requiresImageCount?: boolean
+
+  // 为了保持兼容性，保留旧的 advanced settings
+  requiresAdvancedSettings?: boolean
 }
 
 /**
@@ -145,22 +154,35 @@ export const designModules: DesignModule[] = [
       },
     ],
   },
+  // 新增：夜景模块
   {
     id: 'night-scene',
-    name: 'Night scene',
+    name: 'Night Scene',
     image: '/images/modules/night-scene.webp', // 占位图
     controls: {
-      requiresInputImage: true, // 需要一张白天的图进行转换
-      requiresSimilarityLevel: false,
-      requiresAdvancedSettings: true,
+      requiresInputImage: true,
+      // 定义需要显示的控件
+      aspectRatios: [
+        { value: '21:9', label: '21:9' },
+        { value: '16:9', label: '16:9' },
+        { value: '4:3', label: '4:3' },
+        { value: '3:2', label: '3:2' },
+        { value: '1:1', label: '1:1' },
+        { value: '2:3', label: '2:3' },
+        { value: '3:4', label: '3:4' },
+        { value: '9:16', label: '9:16' },
+        { value: '9:21', label: '9:21' },
+      ],
+      requiresSeedInput: true,
+      requiresImageCount: true,
     },
     title: 'Perfect Night Renders, Zero Setup',
     description:
-      'Skip the tedious lighting setup. Convert any daytime model or render into a professional, atmospheric night scene with just one click.',
+      'Instantly transform any daytime model or render into a professional, atmospheric night scene with a single click.',
     examples: [
       {
-        input: '/images/examples/night-input.webp', // 占位图
-        output: '/images/examples/night-output.webp', // 占位图
+        input: '/images/examples/night-scene-input.webp', // 占位图
+        output: '/images/examples/night-scene-output.webp', // 占位图
       },
     ],
   },
