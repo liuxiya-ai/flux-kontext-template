@@ -197,7 +197,7 @@ export const authOptions: NextAuthOptions = {
 
       // --- 对于OAuth登录 (如Google, GitHub) 的处理逻辑 ---
       // (这部分逻辑在未来的开发中可以被启用和完善)
-      
+
       // try {
       //   if (user?.email) {
       //     // ... 这里可以保留或完善创建/更新第三方登录用户的逻辑 ...

@@ -8,6 +8,23 @@ import { NightSceneGenerationService } from '@/lib/fal-server'
 export async function POST(request: NextRequest) {
   const startTime = Date.now()
   
+  // 模拟模式开关
+  if (process.env.MOCK_API_CALLS === 'true') {
+    console.log('✅ [模拟模式] 已开启，返回模拟数据...')
+    
+    // 模拟2秒的网络延迟
+    await new Promise(res => setTimeout(res, 2000));
+    
+    return NextResponse.json({
+      success: true,
+      images: [
+        // 使用一个已在next.config.js中配置过的、保证可用的图片URL作为模拟数据
+        { url: 'https://source.unsplash.com/random/1024x768?architecture' },
+      ],
+      processingTime: 1337,
+    });
+  }
+
   try {
     console.log('🚀 开始夜景生成请求:', new Date().toISOString())
     

@@ -42,7 +42,7 @@ interface LeftPanelProps {
   state: DesignState
   setState: (newState: Partial<DesignState>) => void
   onModuleSelect: (module: DesignModule) => void
-  onGenerate: () => void // 新增：接收生成函数的类型
+  onGenerate: () => void
 }
 
 /**
@@ -120,27 +120,35 @@ export function LeftPanel({
 
         {/* 图片上传 */}
         {selectedModule.controls.requiresInputImage && (
-          <ImageUploader
-            value={state.inputImage}
-            onChange={file => setState({ inputImage: file })}
-            inputTypes={selectedModule.controls.inputTypes}
-            selectedType={state.inputType}
-            onTypeChange={type => setState({ inputType: type })}
-          />
+          <div className="space-y-2">
+            <Label className="text-base font-semibold">Upload image*</Label>
+            {state.isUploading && (
+              <p className="text-sm text-muted-foreground">Uploading...</p>
+            )}
+              <ImageUploader 
+                value={state.inputImage}
+              onChange={file => setState({ inputImage: file })}
+              inputTypes={selectedModule.controls.inputTypes}
+              selectedType={state.inputType}
+              onTypeChange={type => setState({ inputType: type })}
+              />
+          </div>
         )}
 
-        {/* 提示词输入 */}
-        <PromptInput
-          prompt={state.prompt}
-          onPromptChange={p => setState({ prompt: p })}
-          negativePrompt={state.negativePrompt}
-          onNegativePromptChange={np => setState({ negativePrompt: np })}
-        />
+        {/* 提示词输入 - 夜景模块不显示 */}
+        {selectedModule.id !== 'night-scene' && (
+          <PromptInput
+            prompt={state.prompt}
+            onPromptChange={p => setState({ prompt: p })}
+            negativePrompt={state.negativePrompt}
+            onNegativePromptChange={np => setState({ negativePrompt: np })}
+          />
+        )}
 
         {/* 相似度 */}
         {selectedModule.controls.requiresSimilarityLevel && (
           <SimilaritySelector
-            value={state.similarityLevel}
+              value={state.similarityLevel}
             onChange={value => setState({ similarityLevel: value })}
           />
         )}
@@ -153,7 +161,7 @@ export function LeftPanel({
             value => setState({ roomType: value }),
             selectedModule.controls.roomTypes
           )
-        )}
+          )}
 
         {/* 渲染风格 */}
         {selectedModule.controls.renderStyles && (
@@ -163,7 +171,7 @@ export function LeftPanel({
             value => setState({ renderStyle: value }),
             selectedModule.controls.renderStyles
           )
-        )}
+          )}
 
         {/* 渲染性能 */}
         {selectedModule.controls.requiresRenderPerformance && (
@@ -200,7 +208,7 @@ export function LeftPanel({
       </div>
 
       {/* 生成按钮 */}
-      <div className="border-t border-border pt-6">
+        <div className="border-t border-border pt-6">
         <Button
           size="lg"
           className="w-full text-lg font-bold"
@@ -215,7 +223,7 @@ export function LeftPanel({
           ) : (
             'Generate'
           )}
-        </Button>
+          </Button>
       </div>
     </div>
   )

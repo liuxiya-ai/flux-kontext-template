@@ -59,6 +59,7 @@ const nextConfig = {
       // R2存储域名
       process.env.NEXT_PUBLIC_DEMO_VIDEOS_URL?.replace('https://', '') || 
       "pub-49364ecf52e344d3a722a3c5bca11271.r2.dev",
+      "v3.fal.media", // 👈 新增
     ],
     remotePatterns: [
       {
@@ -85,6 +86,17 @@ const nextConfig = {
         protocol: "https",
         hostname: process.env.NEXT_PUBLIC_DEMO_VIDEOS_URL?.replace('https://', '') || "pub-49364ecf52e344d3a722a3c5bca11271.r2.dev",
         pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "v3.fal.media", // 👈 新增
+        pathname: "/**",
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/**',
       },
     ],
     // 图片优化配置

@@ -221,7 +221,8 @@ export class NightSceneGenerationService {
       if (input.seed) {
         payload.seed = input.seed;
       }
-      if (input.aspect_ratio) {
+      // 只有在 aspect_ratio 不是 'default' 时才传递给 API
+      if (input.aspect_ratio && input.aspect_ratio !== 'default') {
         payload.aspect_ratio = input.aspect_ratio;
       }
       
