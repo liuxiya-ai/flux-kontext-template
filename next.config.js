@@ -60,6 +60,7 @@ const nextConfig = {
       process.env.NEXT_PUBLIC_DEMO_VIDEOS_URL?.replace('https://', '') || 
       "pub-49364ecf52e344d3a722a3c5bca11271.r2.dev",
       "v3.fal.media", // 👈 新增
+      "fal.media", // 👈 新增：fal.ai 生成图片的主域名
     ],
     remotePatterns: [
       {
@@ -95,6 +96,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fal.media', // 👈 新增：fal.ai 生成图片的主域名
         port: '',
         pathname: '/**',
       },
