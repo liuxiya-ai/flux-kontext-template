@@ -50,7 +50,7 @@ export function DesignPageContent() {
     renderPerformance: 70,
     seed: null,
     numberOfImages: 1,
-    aspectRatio: designModules[0].controls.aspectRatios?.[0].value ?? '1:1', // 新增：初始化纵横比
+    aspectRatio: designModules[0].controls.aspectRatios?.[0].value ?? 'default', // 新增：初始化纵横比
     
     // 新增：初始化生成状态
     isGenerating: false,
@@ -82,7 +82,7 @@ export function DesignPageContent() {
       renderPerformance: 70,
       seed: null,
       numberOfImages: 1,
-      aspectRatio: module.controls.aspectRatios?.[0].value ?? '1:1',
+      aspectRatio: module.controls.aspectRatios?.[0].value ?? 'default',
       // 重置生成结果
       isGenerating: false,
       generatedImages: [],

@@ -32,7 +32,7 @@ export interface ArchitectureGenerationInput {
 // 新增：夜景生成的输入类型
 export interface NightSceneGenerationInput {
   image_url: string;
-  aspect_ratio?: "21:9" | "16:9" | "4:3" | "3:2" | "1:1" | "2:3" | "3:4" | "9:16" | "9:21";
+  aspect_ratio?: "default" | "21:9" | "16:9" | "4:3" | "3:2" | "1:1" | "2:3" | "3:4" | "9:16" | "9:21";
   seed?: number;
   num_images?: number;
 }
@@ -221,7 +221,6 @@ export class NightSceneGenerationService {
       if (input.seed) {
         payload.seed = input.seed;
       }
-      // 只有在 aspect_ratio 不是 'default' 时才传递给 API
       if (input.aspect_ratio && input.aspect_ratio !== 'default') {
         payload.aspect_ratio = input.aspect_ratio;
       }

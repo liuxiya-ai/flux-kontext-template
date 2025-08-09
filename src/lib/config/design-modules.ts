@@ -30,6 +30,9 @@ export interface ModuleControl {
   requiresSeedInput?: boolean
   requiresImageCount?: boolean
 
+  // 新增：控制是否隐藏提示词输入
+  hidePromptInput?: boolean
+
   // 为了保持兼容性，保留旧的 advanced settings
   requiresAdvancedSettings?: boolean
 }
@@ -163,7 +166,7 @@ export const designModules: DesignModule[] = [
       requiresInputImage: true,
       // 定义需要显示的控件
       aspectRatios: [
-        { value: 'default', label: 'Default' }, // 新增默认选项
+        { value: 'default', label: 'Default' },
         { value: '21:9', label: '21:9' },
         { value: '16:9', label: '16:9' },
         { value: '4:3', label: '4:3' },
@@ -176,6 +179,8 @@ export const designModules: DesignModule[] = [
       ],
       requiresSeedInput: true,
       requiresImageCount: true,
+      // 新增：标记此模块不需要显示提示词输入
+      hidePromptInput: true,
     },
     title: 'Perfect Night Renders, Zero Setup',
     description:

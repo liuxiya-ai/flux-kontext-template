@@ -127,7 +127,7 @@ export function LeftPanel({
             )}
               <ImageUploader 
                 value={state.inputImage}
-              onChange={file => setState({ inputImage: file })}
+                onChange={file => setState({ inputImage: file })}
               inputTypes={selectedModule.controls.inputTypes}
               selectedType={state.inputType}
               onTypeChange={type => setState({ inputType: type })}
@@ -135,8 +135,8 @@ export function LeftPanel({
           </div>
         )}
 
-        {/* 提示词输入 - 夜景模块不显示 */}
-        {selectedModule.id !== 'night-scene' && (
+        {/* 提示词输入 */}
+        {!selectedModule.controls.hidePromptInput && (
           <PromptInput
             prompt={state.prompt}
             onPromptChange={p => setState({ prompt: p })}
@@ -178,17 +178,26 @@ export function LeftPanel({
           <PerformanceSlider
             value={state.renderPerformance}
             onChange={value => setState({ renderPerformance: value })}
-          />
+            />
         )}
 
         {/* 新增：纵横比选择器 */}
         {selectedModule.controls.aspectRatios && (
-          renderSelect(
-            'Aspect ratio*',
-            state.aspectRatio,
-            value => setState({ aspectRatio: value }),
-            selectedModule.controls.aspectRatios
-          )
+          <div>
+            <Label className="text-base font-semibold">Select the Aspect Ratio</Label>
+            <Select value={state.aspectRatio} onValueChange={value => setState({ aspectRatio: value })}>
+              <SelectTrigger className="mt-2">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {selectedModule.controls.aspectRatios.map(option => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         )}
 
         {/* 高级设置 (种子, 图片数量等) */}
