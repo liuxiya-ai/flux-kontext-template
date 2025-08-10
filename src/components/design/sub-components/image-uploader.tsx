@@ -17,9 +17,9 @@ interface SelectOption {
 interface ImageUploaderProps {
   value: File | null
   onChange: (file: File | null) => void
-  // 🆕 添加可选的 props 以支持未来扩展
+  // 🆕 添加可选的 props 以支持未来扩展，允许空字符串和undefined
   inputTypes?: SelectOption[]
-  selectedType?: string
+  selectedType?: string | null | undefined
   onTypeChange?: (type: string) => void
 }
 
@@ -72,20 +72,28 @@ export function ImageUploader({
     onChange(null)
   }
 
+  // 检查是否需要显示类型选择器：需要有 inputTypes、selectedType 非空且有 onTypeChange 函数
+  const shouldShowTypeSelector = inputTypes && 
+    inputTypes.length > 0 && 
+    selectedType !== null && 
+    selectedType !== undefined && 
+    selectedType !== '' && 
+    onTypeChange
+
   // 如果有图片预览
   if (preview) {
     return (
       <div className="space-y-3">
         {/* 🆕 如果提供了 inputTypes，显示类型选择器 */}
-        {inputTypes && inputTypes.length > 0 && selectedType && onTypeChange && (
+        {shouldShowTypeSelector && (
           <div className="space-y-2">
             <label className="text-sm font-medium">Input Type</label>
             <select 
-              value={selectedType}
-              onChange={(e) => onTypeChange(e.target.value)}
+              value={selectedType || ''}
+              onChange={(e) => onTypeChange!(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
             >
-              {inputTypes.map(option => (
+              {inputTypes!.map(option => (
                 <option key={option.value} value={option.value}>
                   {option.label}
                 </option>
@@ -118,15 +126,15 @@ export function ImageUploader({
   return (
     <div className="space-y-3">
       {/* 🆕 如果提供了 inputTypes，显示类型选择器 */}
-      {inputTypes && inputTypes.length > 0 && selectedType && onTypeChange && (
+      {shouldShowTypeSelector && (
         <div className="space-y-2">
           <label className="text-sm font-medium">Input Type</label>
           <select 
-            value={selectedType}
-            onChange={(e) => onTypeChange(e.target.value)}
+            value={selectedType || ''}
+            onChange={(e) => onTypeChange!(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
           >
-            {inputTypes.map(option => (
+            {inputTypes!.map(option => (
               <option key={option.value} value={option.value}>
                 {option.label}
               </option>

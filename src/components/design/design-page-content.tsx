@@ -43,14 +43,14 @@ export function DesignPageContent() {
     inputImage: null,
     prompt: '',
     negativePrompt: '',
-    inputType: designModules[0].controls.inputTypes?.[0].value ?? '',
+    inputType: designModules[0].controls.inputTypes?.[0]?.value || '', // 🔧 修复：添加可选链和默认值
     similarityLevel: 'balanced',
-    roomType: designModules[0].controls.roomTypes?.[0].value ?? '',
-    renderStyle: designModules[0].controls.renderStyles?.[0].value ?? '',
+    roomType: designModules[0].controls.roomTypes?.[0]?.value || '', // 🔧 修复：添加可选链
+    renderStyle: designModules[0].controls.renderStyles?.[0]?.value || '', // 🔧 修复：添加可选链
     renderPerformance: 70,
     seed: null,
     numberOfImages: 1,
-    aspectRatio: designModules[0].controls.aspectRatios?.[0].value ?? 'default', // 新增：初始化纵横比
+    aspectRatio: designModules[0].controls.aspectRatios?.[0]?.value || 'default', // 🔧 修复：添加可选链
     
     // 新增：初始化生成状态
     isGenerating: false,
@@ -75,14 +75,14 @@ export function DesignPageContent() {
       uploadedImageUrl: null,
       prompt: '',
       negativePrompt: '',
-      inputType: module.controls.inputTypes?.[0].value ?? '',
+      inputType: module.controls.inputTypes?.[0]?.value || '', // 🔧 修复：添加可选链
       similarityLevel: 'balanced',
-      roomType: module.controls.roomTypes?.[0].value ?? '',
-      renderStyle: module.controls.renderStyles?.[0].value ?? '',
+      roomType: module.controls.roomTypes?.[0]?.value || '', // 🔧 修复：添加可选链
+      renderStyle: module.controls.renderStyles?.[0]?.value || '', // 🔧 修复：添加可选链
       renderPerformance: 70,
       seed: null,
       numberOfImages: 1,
-      aspectRatio: module.controls.aspectRatios?.[0].value ?? 'default',
+      aspectRatio: module.controls.aspectRatios?.[0]?.value || 'default', // 🔧 修复：添加可选链
       // 重置生成结果
       isGenerating: false,
       generatedImages: [],
