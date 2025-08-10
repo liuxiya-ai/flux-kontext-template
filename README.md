@@ -1,5 +1,38 @@
 # 🎨 AIRender - AI建筑效果图生成平台
 
+## 🚀 最新状态 (2025-01-26)
+
+- **核心变更**: **分支管理优化与Vercel部署准备**
+- **当前状态**: ✅ **完成分支回退和代码架构整理，准备生产部署**
+- **摘要**: 成功实现了Git分支管理优化，master分支回退到稳定版本，architecture_ai分支保持最新开发状态。解决了Vercel部署的TypeScript兼容性问题，项目现已准备好进行生产环境部署。
+
+### 本次更新核心亮点 (2025-01-26)
+- ✅ **Git分支管理优化**:
+  - master分支回退到稳定版本 `a7486a3` (2025年7月26日提交)
+  - architecture_ai分支保持最新功能，包含完整的夜景生成模块
+  - 设置architecture_ai为默认开发分支，确保后续开发延续性
+- ✅ **Vercel部署问题修复**:
+  - 修复ImageUploader组件的TypeScript类型定义问题
+  - 为design-modules.ts中的night-scene模块添加inputTypes兼容性
+  - 解决了组件间接口不匹配导致的部署失败
+- ✅ **代码架构完善**:
+  - 优化了组件的可选属性设计，提升代码可扩展性
+  - 保持了向前兼容性，为未来功能扩展预留接口
+  - 所有TypeScript错误已修复，通过严格类型检查
+
+### 分支管理策略更新 (2025-01-26)
+- **master分支**: 生产稳定版本，仅包含经过充分测试的功能
+- **architecture_ai分支**: 主要开发分支，包含最新功能和实验性特性
+- **开发默认分支**: architecture_ai（所有新功能开发在此分支进行）
+- **部署策略**: Vercel使用architecture_ai分支进行持续部署
+
+### 修改的文件清单 (2025-01-26)
+- `src/components/design/sub-components/image-uploader.tsx` - **更新**: 添加可选属性支持
+- `src/lib/config/design-modules.ts` - **更新**: 添加inputTypes兼容性数组
+- `README.md` - **更新**: 记录分支管理策略和部署准备
+
+---
+
 ## 🚀 最新状态 (2025-01-09)
 
 - **核心变更**: **夜景生成功能完整实现**
