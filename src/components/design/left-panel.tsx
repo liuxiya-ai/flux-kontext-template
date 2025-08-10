@@ -183,7 +183,7 @@ export function LeftPanel({
 
         {/* 新增：纵横比选择器 */}
         {selectedModule.controls.aspectRatios && (
-          <div>
+            <div>
             <Label className="text-base font-semibold">Select the Aspect Ratio</Label>
             <Select value={state.aspectRatio} onValueChange={value => setState({ aspectRatio: value })}>
               <SelectTrigger className="mt-2">
