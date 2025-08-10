@@ -164,6 +164,9 @@ export const designModules: DesignModule[] = [
     image: '/images/modules/night-scene.webp', // 占位图
     controls: {
       requiresInputImage: true,
+      // 为了保持代码兼容性，添加空的 inputTypes 数组
+      // 将来如果需要添加输入类型选择，可以在这里配置
+      inputTypes: [],
       // 定义需要显示的控件
       aspectRatios: [
         { value: 'default', label: 'Default' },

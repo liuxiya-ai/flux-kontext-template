@@ -804,3 +804,22 @@ AIRender项目的Generate页面架构体现了现代Web应用开发的最佳实�
 - 👥 **团队协作**：清晰的代码结构和文档支持
 
 这个架构不仅解决了当前的业务需求，更为未来的功能扩展和技术演进奠定了坚实的基础。 
+
+##未来拓展实例
+
+如果将来您想为夜景模块添加输入类型选择，只需要这样修改配置：
+// src/lib/config/design-modules.ts
+{
+  id: 'night-scene',
+  // ...
+  controls: {
+    // ...
+    inputTypes: [
+      { value: 'daylight', label: 'Daylight Photo' },
+      { value: 'dusk', label: 'Dusk Photo' },
+      { value: 'model', label: '3D Model' },
+    ],
+    // ...
+  },
+  // ...
+}
