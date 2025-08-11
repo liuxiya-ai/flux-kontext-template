@@ -1,0 +1,153 @@
+{
+  "HomePage": {
+    "title": "AI建筑生成器",
+    "description": "最佳AI建筑渲染平台。由人工智能驱动。"
+  },
+  "hero": {
+    "badge": "专业AI图像生成平台",
+    "title": "使用以下工具创建令人惊艳的图像",
+    "subtitle": "Flux Kontext AI",
+    "description": "使用我们尖端的AI技术将您的想法转化为专业图像。从文本生成图像，编辑现有图像，并使用Flux Kontext AI的强大功能处理多张图像。",
+    "cta": {
+      "primary": "开始创建",
+      "secondary": "查看价格"
+    }
+  },
+  "features": {
+    "title": "Flux Kontext AI平台的主要功能",
+    "subtitle": "我们的Flux Kontext AI结合尖端技术，在一个无缝平台中提供专业的图像生成和编辑。",
+    "items": [
+      {
+        "title": "文本转图像生成",
+        "description": "使用先进的AI技术将您的文本描述转换为令人惊艳的高质量图像。"
+      },
+      {
+        "title": "专业图像编辑",
+        "description": "使用自然语言指令编辑现有图像，实现精确修改。"
+      },
+      {
+        "title": "多图像处理",
+        "description": "同时处理多张图像，保持一致的风格和质量。"
+      }
+    ]
+  },
+  "howTo": {
+    "title": "如何通过4个简单步骤创建建筑渲染图",
+    "description": "按照这些简单步骤，使用AIRender AI平台创建专业的建筑可视化效果。",
+    "alternativeTitle": "如何使用AI创建渲染图",
+    "alternativeDescription": "按照这些简单步骤，使用我们先进的AI可视化技术将您的建筑创意转化为专业渲染图。",
+    "steps": [
+      {
+        "number": "1",
+        "title": "上传您的草图",
+        "description": "上传您想要转换为专业渲染图的建筑草图、平面图或设计概念。"
+      },
+      {
+        "number": "2",
+        "title": "选择样式和设置",
+        "description": "选择建筑风格、室内/室外视图、照明条件和材料偏好来定制您的渲染图。"
+      },
+      {
+        "number": "3",
+        "title": "生成渲染图",
+        "description": "我们的AI建筑可视化系统处理您的输入，创建具有专业质量的逼真渲染图。"
+      },
+      {
+        "number": "4",
+        "title": "下载和展示",
+        "description": "预览您的建筑渲染图，进行最后调整，并下载专业可视化效果用于客户展示。"
+      }
+    ]
+  },
+  "faq": {
+    "title": "Flux Kontext AI - 常见问题",
+    "subtitle": "找到关于我们Flux Kontext AI平台及其强大图像生成功能的常见问题答案。",
+    "description": "找到关于我们Flux Kontext AI平台及其强大图像生成功能的常见问题答案。",
+    "items": [
+      {
+        "question": "什么是Flux Kontext AI？",
+        "answer": "Flux Kontext AI是一个先进的图像生成平台，使用尖端人工智能从文本描述创建令人惊艳的图像，编辑现有图像，并同时处理多张图像。"
+      },
+      {
+        "question": "文本转图像生成是如何工作的？",
+        "answer": "我们的AI分析您的文本描述，并使用先进的Flux Pro和Max模型生成高质量图像。只需描述您想看到的内容，我们的AI就会在几秒钟内创建专业级图像。"
+      },
+      {
+        "question": "我可以使用Flux Kontext编辑现有图像吗？",
+        "answer": "可以！我们的平台支持通过自然语言指令进行图像编辑。上传图像并描述您想要的更改，我们的AI将专业地应用这些修改。"
+      },
+      {
+        "question": "支持哪些图像格式和尺寸？",
+        "answer": "Flux Kontext AI支持多种宽高比，包括1:1、16:9、9:16、4:3、3:2和21:9。您可以以JPEG和PNG格式导出高分辨率图像用于专业用途。"
+      },
+      {
+        "question": "我可以一次生成多少张图像？",
+        "answer": "您可以使用我们的多图像处理功能同时生成最多4张图像。这让您能够高效地探索概念的不同变化。"
+      },
+      {
+        "question": "Flux Kontext与其他AI图像生成器有什么不同？",
+        "answer": "Flux Kontext凭借其先进的Flux Pro和Max模型、专业图像编辑功能、多图像处理和灵活的宽高比支持在一个无缝平台中脱颖而出。"
+      },
+      {
+        "question": "有什么使用限制吗？",
+        "answer": "使用情况取决于您的计划和API限制。我们的平台包括安全控制和内容过滤，以确保负责任的AI图像生成，同时保持创作自由。"
+      },
+      {
+        "question": "我可以商业使用生成的图像吗？",
+        "answer": "是的，通过Flux Kontext AI生成的图像通常可以用于商业用途。请查看具体的服务条款和许可协议以了解详细的使用权利。"
+      }
+    ]
+  },
+  "cta": {
+    "title": "准备创建令人惊艳的图像了吗？",
+    "subtitle": "加入成千上万使用Flux Kontext AI将想法变为现实的创作者。",
+    "button": "立即开始"
+  },
+  "footer": {
+    "brand": {
+      "name": "Flux Kontext",
+      "description": "专业AI图像生成平台。从文本创建令人惊艳的图像，编辑现有图像，并使用先进的AI技术处理多张图像。",
+      "copyright": "© 2025 Flux Kontext. 保留所有权利。"
+    },
+    "contact": {
+      "title": "联系我们",
+      "email": "support@fluxkontext.space"
+    },
+    "legal": {
+      "title": "法律条款",
+      "terms": "服务条款",
+      "privacy": "隐私政策",
+      "refund": "退款政策"
+    },
+    "languages": {
+      "title": "语言"
+    },
+    "social": {
+      "builtWith": "用❤️为全世界的创作者打造",
+      "followUs": "关注我们"
+    }
+  },
+  "twitterShowcase": {
+    "title": "AI图像生成展示",
+    "description": "发现来自领先平台的惊人AI生成图像，展示最新的人工智能技术。",
+    "scrollHint": "滚动探索更多"
+  },
+  "navigation": {
+    "home": "首页",
+    "generate": "生成",
+    "pricing": "定价",
+    "resources": "资源",
+    "resourcesHub": "资源中心",
+    "apiDocs": "API文档",
+    "login": "登录",
+    "signup": "注册",
+    "dashboard": "仪表板"
+  },
+  "buttons": {
+    "signUp": "注册",
+    "signOut": "退出",
+    "getStarted": "开始使用",
+    "learnMore": "了解更多",
+    "tryNow": "立即尝试"
+  }
+} 
