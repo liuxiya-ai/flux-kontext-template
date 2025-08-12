@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react"
-import { usePathname } from "next/navigation"
 import { ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Link } from "@/i18n/navigation"
+import { Link, usePathname } from "@/i18n/navigation"
+import { useLocale } from "next-intl"
 
 // 支持的语言配置
 const LOCALES = [
@@ -24,29 +24,14 @@ export function LanguageSwitcherIntl({
   className = "" 
 }: LanguageSwitcherIntlProps) {
   const pathname = usePathname()
+  const currentLocale = useLocale() as Locale
   const [isOpen, setIsOpen] = useState(false)
   
-  // 从路径名获取当前语言
-  const getCurrentLocale = (): Locale => {
-    // next-intl的路径结构: /zh/xxx 或 /en/xxx 或 /xxx (默认中文)
-    const segments = pathname.split('/')
-    const potentialLocale = segments[1]
-    
-    // 如果第一段是支持的语言代码，返回它
-    if (LOCALES.some(locale => locale.code === potentialLocale)) {
-      return potentialLocale as Locale
-    }
-    
-    // 否则返回默认语言（中文）
-    return 'zh'
-  }
-  
-  const currentLocale = getCurrentLocale()
   const currentLocaleInfo = LOCALES.find(locale => locale.code === currentLocale)!
   
   if (variant === "toggle") {
     // 简单的切换模式 - 在中英文之间切换
-    const otherLocale = currentLocale === 'zh' ? 'en' : 'zh'
+    const otherLocale: Locale = currentLocale === 'zh' ? 'en' : 'zh'
     const otherLocaleInfo = LOCALES.find(locale => locale.code === otherLocale)!
     
     return (
@@ -104,20 +89,8 @@ export function LanguageSwitcherIntl({
 // 简化版本 - 只显示当前语言，点击切换
 export function SimpleLanguageSwitcherIntl({ className = "" }: { className?: string }) {
   const pathname = usePathname()
-  
-  const getCurrentLocale = (): Locale => {
-    const segments = pathname.split('/')
-    const potentialLocale = segments[1]
-    
-    if (LOCALES.some(locale => locale.code === potentialLocale)) {
-      return potentialLocale as Locale
-    }
-    
-    return 'zh'
-  }
-  
-  const currentLocale = getCurrentLocale()
-  const otherLocale = currentLocale === 'zh' ? 'en' : 'zh'
+  const currentLocale = useLocale() as Locale
+  const otherLocale: Locale = currentLocale === 'zh' ? 'en' : 'zh'
   const currentLocaleInfo = LOCALES.find(locale => locale.code === currentLocale)!
   const otherLocaleInfo = LOCALES.find(locale => locale.code === otherLocale)!
   

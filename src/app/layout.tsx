@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ClientBody from "./ClientBody";
-import { Analytics } from "@/components/Analytics";
-import SessionProvider from "@/components/providers/SessionProvider";
-import { GoogleOneTap } from "@/components/GoogleOneTap";
-import { GoogleOneTapTrigger } from "@/components/GoogleOneTapTrigger";
-import { StructuredData } from "@/components/StructuredData";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,23 +14,24 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "AIRender: The AI Architecture & Interior Design Render Platform",
+    default: "AIRender: AI建筑与室内设计渲染平台",
     template: "%s | AIRender"
   },
-  description: "AIRender is the leading AI platform for architectural and interior design renders. Instantly transform sketches to realistic renderings, find design inspiration, and effortlessly perform post-render modifications.",
+  description: "AIRender是领先的AI建筑和室内设计渲染平台。瞬间将草图转换为逼真的渲染图，发现设计灵感，轻松进行渲染后修改。",
   keywords: [
     "ai render",
-    "architectural rendering",
-    "ai architecture",
-    "interior design ai",
-    "architectural visualization",
-    "sketch to render",
-    "landscape design ai",
-    "ai for architects",
-    "Residential Design", 
-    "Commercial Buildings", 
-    "Landscape Architecture", 
-    "Architectural Renovation"
+    "ai渲染", 
+    "建筑渲染",
+    "ai建筑",
+    "室内设计ai",
+    "建筑可视化",
+    "草图转渲染",
+    "景观设计ai",
+    "建筑师ai",
+    "住宅设计", 
+    "商业建筑", 
+    "景观建筑", 
+    "建筑改造"
   ],
   authors: [{ name: "AIRender Team" }],
   creator: "AIRender",
@@ -69,19 +64,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <StructuredData />
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <SessionProvider>
-          <ClientBody>
-            {children}
-          </ClientBody>
-          <GoogleOneTap />
-          <GoogleOneTapTrigger />
-          <Analytics />
-        </SessionProvider>
+    <html className={`${geistSans.variable} ${geistMono.variable}`} suppressHydrationWarning>
+      <body className="antialiased">
+        {children}
       </body>
     </html>
   );

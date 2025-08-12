@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { DesignModule } from '@/lib/config/design-modules'
 import { CheckCircle, Loader2, X, Download } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useTranslations } from 'next-intl'
 
 // 定义 RightPanel 组件的 props 类型
 interface RightPanelProps {
@@ -27,8 +28,14 @@ export function RightPanel({
   processingTime = null,
   onCancelGeneration 
 }: RightPanelProps) {
+  const tRight = useTranslations('generator.right')
+  const tModules = useTranslations('generator.modules')
+
+  const moduleTitle = tModules(`${selectedModule.id}.title`)
+  const moduleDescription = tModules(`${selectedModule.id}.description`)
+
   // 将描述文本按句点分割，用于列表展示
-  const descriptionPoints = selectedModule.description
+  const descriptionPoints = moduleDescription
     .split('. ')
     .map(s => s.trim())
     .filter(s => s.length > 0)
@@ -39,11 +46,11 @@ export function RightPanel({
       <div className="p-8 flex flex-col items-center justify-center min-h-[400px]">
         <div className="flex items-center space-x-3 mb-4">
           <Loader2 className="h-6 w-6 animate-spin text-primary" />
-          <span className="text-lg font-medium">Generating image...</span>
+          <span className="text-lg font-medium">{tRight('generating')}</span>
         </div>
         
         <p className="text-muted-foreground text-center mb-6">
-          请耐心等待，AI正在为您生成高质量的夜景效果图
+          {tRight('generatingNote')}
         </p>
         
         {onCancelGeneration && (
@@ -53,7 +60,7 @@ export function RightPanel({
             className="flex items-center space-x-2"
           >
             <X className="h-4 w-4" />
-            <span>Cancel</span>
+            <span>{tRight('cancel')}</span>
           </Button>
         )}
       </div>
@@ -66,7 +73,7 @@ export function RightPanel({
       <div className="p-8 flex flex-col items-center justify-center min-h-[400px]">
         <div className="flex items-center space-x-3 mb-4 text-destructive">
           <X className="h-6 w-6" />
-          <span className="text-lg font-medium">Generation Failed</span>
+          <span className="text-lg font-medium">{tRight('failed')}</span>
         </div>
         
         <p className="text-muted-foreground text-center mb-6">
@@ -77,7 +84,7 @@ export function RightPanel({
           variant="outline" 
           onClick={() => window.location.reload()}
         >
-          Try Again
+          {tRight('tryAgain')}
         </Button>
       </div>
     )
@@ -90,11 +97,11 @@ export function RightPanel({
         <div className="flex items-center justify-between mb-6">
           <div>
             <h2 className="text-2xl font-bold tracking-tight">
-              Generated Results
+              {tRight('results')}
             </h2>
             {processingTime && (
               <p className="text-sm text-muted-foreground mt-1">
-                Generated in {Math.round(processingTime / 1000)}s
+                {tRight('generatedIn', { seconds: Math.round(processingTime / 1000) })}
               </p>
             )}
           </div>
@@ -141,7 +148,7 @@ export function RightPanel({
   return (
     <div className="p-8">
       <h2 className="text-2xl font-bold tracking-tight">
-        {selectedModule.title}
+        {moduleTitle}
       </h2>
 
       <ul className="mt-6 space-y-4 text-muted-foreground">
@@ -159,7 +166,7 @@ export function RightPanel({
           <div className="grid grid-cols-2 gap-4">
             {/* Input Image */}
             <div className="space-y-2">
-              <p className="text-sm font-medium text-center">Input Image</p>
+              <p className="text-sm font-medium text-center">{tRight('input')}</p>
               <Image
                 src={selectedModule.examples[0].input}
                 alt={`${selectedModule.name} - Input Example`}
@@ -171,7 +178,7 @@ export function RightPanel({
 
             {/* Output Image */}
             <div className="space-y-2">
-              <p className="text-sm font-medium text-center">Realistic Render</p>
+              <p className="text-sm font-medium text-center">{tRight('output')}</p>
               <Image
                 src={selectedModule.examples[0].output}
                 alt={`${selectedModule.name} - Output Example`}
@@ -187,7 +194,7 @@ export function RightPanel({
        {/* 如果没有示例图，显示一个占位符 */}
       {selectedModule.examples.length === 0 && (
         <div className="mt-8 flex items-center justify-center h-60 w-full rounded-lg border-2 border-dashed bg-muted">
-            <p className="text-muted-foreground">Example images will be shown here.</p>
+            <p className="text-muted-foreground">{tRight('examplePlaceholder')}</p>
         </div>
       )}
     </div>

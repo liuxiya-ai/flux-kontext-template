@@ -1,14 +1,19 @@
+"use client"
+
 import { keyFeatures } from "@/lib/config/features"; // 导入新的功能数据
 import Image from "next/image"; // 导入Next.js的Image组件
-import Link from "next/link"; // 导入Next.js的Link组件
+import { Link } from "@/i18n/navigation"; // 使用i18n导航Link
 import { Button } from "@/components/ui/button"; // 导入按钮组件
-import { common } from "@/lib/content"; // 导入通用文案
+import { useTranslations } from 'next-intl'; // 导入翻译hook
 
 /**
  * @name KeyFeatures
  * @description 首页核心功能展示区 (静态版)，一个服务器组件，负责渲染所有核心功能。
  */
 export function KeyFeatures() {
+  // 使用翻译
+  const tButtons = useTranslations('buttons');
+  
   return (
     <section className="py-8 px-4 relative z-20">
       <div className="container mx-auto">
@@ -46,7 +51,7 @@ export function KeyFeatures() {
                     <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" fill="currentColor"/>
                     </svg>
-                    {common.buttons.startCreating}
+                    {tButtons('getStarted')}
                   </Button>
                 </Link>
               </div>

@@ -5,7 +5,10 @@ export const routing = defineRouting({
   locales: ['zh', 'en'],
  
   // 默认语言为中文
-  defaultLocale: 'zh'
+  defaultLocale: 'zh',
+  
+  // 路径前缀策略 - 始终显示语言前缀，避免默认语言无前缀导致的404
+  localePrefix: 'always'
 });
 
 // 导出类型定义供其他文件使用

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { signIn, getProviders } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 // 导入认证文案模块
 import { auth, common } from "@/lib/content"
 

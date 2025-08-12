@@ -2,6 +2,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useLocale } from 'next-intl'
 import { designModules, DesignModule } from '@/lib/config/design-modules'
 import { LeftPanel } from './left-panel'
 import { RightPanel } from './right-panel'
@@ -37,6 +38,7 @@ export interface DesignState {
  * 负责管理整个页面的状态和布局。
  */
 export function DesignPageContent() {
+  const locale = useLocale()
   // 状态管理：使用一个统一的状态对象来管理所有参数
   const [state, setState] = useState<DesignState>({
     selectedModule: designModules[0],
@@ -192,12 +194,13 @@ export function DesignPageContent() {
     <div className="container mx-auto px-4 py-8">
       {/* 页面主标题和描述 */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight">AI Room Design</h1>
+        <h1 className="text-4xl font-bold tracking-tight">
+          {locale === 'zh' ? 'AI 室内外设计' : 'AI Room Design'}
+        </h1>
         <p className="mt-4 text-lg text-muted-foreground max-w-3xl mx-auto">
-          ArchiVinci's AI Room Design & Home Designs Rendering module can fill
-          empty spaces with furniture, update existing decor, and transform
-          entire interiors, delivering enhanced aesthetics and functionality for
-          every home.
+          {locale === 'zh'
+            ? 'ArchiVinci 的 AI 室内外设计渲染模块可以为空间添加家具、更新现有装饰，并改造整个室内环境，为每个家带来更好的美学与功能体验。'
+            : "ArchiVinci's AI Room Design & Home Designs Rendering module can fill empty spaces with furniture, update existing decor, and transform entire interiors, delivering enhanced aesthetics and functionality for every home."}
         </p>
       </div>
 

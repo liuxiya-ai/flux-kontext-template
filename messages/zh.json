@@ -149,5 +149,51 @@
     "getStarted": "开始使用",
     "learnMore": "了解更多",
     "tryNow": "立即尝试"
+  },
+  "generator": {
+    "left": {
+      "selectModule": "Select module",
+      "uploadImage": "Upload image",
+      "uploading": "Uploading...",
+      "roomType": "Room type",
+      "renderStyle": "Render style",
+      "aspectRatio": "Aspect ratio",
+      "generating": "Generating...",
+      "generate": "Generate"
+    },
+    "right": {
+      "generating": "正在生成图片...",
+      "generatingNote": "请耐心等待，AI 正在为您生成高质量的渲染图",
+      "cancel": "取消",
+      "failed": "生成失败",
+      "tryAgain": "重试",
+      "results": "生成结果",
+      "generatedIn": "用 {seconds}s 生成",
+      "input": "输入图像",
+      "output": "渲染效果",
+      "examplePlaceholder": "示例图片将在这里显示"
+    },
+    "modules": {
+      "inspire": {
+        "title": "瞬间灵感",
+        "description": "快速激发灵感。上传草图即可生成多组建筑设计概念，用于快速头脑风暴与可视化。"
+      },
+      "exterior": {
+        "title": "从模型到大师级作品",
+        "description": "一键将 SketchUp、Revit 或 CAD 模型升级为照片级真实建筑渲染。"
+      },
+      "interior": {
+        "title": "室内渲染生成器",
+        "description": "上传室内照片、草图或 3D 模型。根据创作需求选择相似度。用提示词描述目标空间（例如：现代客厅、温馨氛围）。选择房间类型与风格，并可在速度与质量间调节渲染性能。"
+      },
+      "modify": {
+        "title": "像素级精修，瞬间完成",
+        "description": "轻松应对客户的临时修改。选中成图任意区域，用简单文本命令即可修改。"
+      },
+      "night-scene": {
+        "title": "一键夜景，无需设置",
+        "description": "将任意白天模型或渲染一键转换为专业、氛围感十足的夜景效果。"
+      }
+    }
   }
 } 

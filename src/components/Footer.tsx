@@ -1,31 +1,20 @@
-// 导入文案系统
-import { footer } from "@/lib/content"
+"use client"
+
+import { useTranslations } from 'next-intl'
+import { Link } from '@/i18n/navigation'
 
 export function Footer() {
+  const t = useTranslations('footer');
 
   const legalLinks = [
-    { label: footer.legal.terms, href: "/terms" },
-    { label: footer.legal.privacy, href: "/privacy" },
-    { label: footer.legal.refund, href: "/refund" }
+    { label: t('legal.terms'), href: "/terms" },
+    { label: t('legal.privacy'), href: "/privacy" },
+    { label: t('legal.refund'), href: "/refund" }
   ]
 
   const languages = [
-    { code: "en", label: "English", flag: "🇺🇸" },
-    { code: "de", label: "Deutsch", flag: "🇩🇪" },
-    { code: "es", label: "Español", flag: "🇪🇸" },
     { code: "zh", label: "中文", flag: "🇨🇳" },
-    { code: "fr", label: "Français", flag: "🇫🇷" },
-    { code: "it", label: "Italiano", flag: "🇮🇹" },
-    { code: "ja", label: "日本語", flag: "🇯🇵" },
-    { code: "ko", label: "한국어", flag: "🇰🇷" },
-    { code: "nl", label: "Nederlands", flag: "🇳🇱" },
-    { code: "pl", label: "Polski", flag: "🇵🇱" },
-    { code: "pt", label: "Português", flag: "🇵🇹" },
-    { code: "ru", label: "Русский", flag: "🇷🇺" },
-    { code: "tr", label: "Türkçe", flag: "🇹🇷" },
-    { code: "ar", label: "العربية", flag: "🇸🇦" },
-    { code: "hi", label: "हिन्दी", flag: "🇮🇳" },
-    { code: "bn", label: "বাংলা", flag: "🇧🇩" }
+    { code: "en", label: "English", flag: "🇺🇸" }
   ]
 
   return (
@@ -35,28 +24,28 @@ export function Footer() {
           {/* Brand Section */}
           <div className="space-y-4">
             <div className="text-2xl font-bold text-primary">
-              {footer.brand.name}
+              {t('brand.name')}
             </div>
             <p className="text-muted-foreground text-sm leading-relaxed">
-              {footer.brand.description}
+              {t('brand.description')}
             </p>
             <div className="text-sm text-muted-foreground">
-              {footer.brand.copyright}
+              {t('brand.copyright')}
             </div>
           </div>
 
           {/* Contact & Legal - 中间栏目 */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">{footer.contact.title}</h3>
+            <h3 className="font-semibold text-foreground">{t('contact.title')}</h3>
             <a
-              href={`mailto:${footer.contact.email}`}
+              href={`mailto:${t('contact.email')}`}
               className="block text-muted-foreground hover:text-primary hover:font-semibold active:scale-95 transition-all duration-200 text-sm"
             >
-              {footer.contact.email}
+              {t('contact.email')}
             </a>
 
             <div className="pt-4">
-              <h3 className="font-semibold text-foreground mb-3">{footer.legal.title}</h3>
+              <h3 className="font-semibold text-foreground mb-3">{t('legal.title')}</h3>
               <div className="space-y-2">
                 {legalLinks.map((link) => (
                   <a
@@ -73,21 +62,22 @@ export function Footer() {
 
           {/* Languages - 右边栏目 */}
           <div className="space-y-4">
-            <h3 className="font-semibold text-foreground">{footer.languages.title}</h3>
+            <h3 className="font-semibold text-foreground">{t('languages.title')}</h3>
             <div className="grid grid-cols-2 gap-1">
               {languages.map((lang) => (
-                <a
+                <Link
                   key={lang.code}
-                  href={`/${lang.code}`}
+                  href="/"
+                  locale={lang.code}
                   className={`flex items-center space-x-2 transition-all duration-200 text-sm py-1 hover:font-semibold active:scale-95 ${
-                    lang.code === 'en' 
+                    lang.code === 'zh' 
                       ? 'text-primary font-medium' 
                       : 'text-muted-foreground hover:text-primary'
                   }`}
                 >
                   <span>{lang.flag}</span>
                   <span>{lang.label}</span>
-                </a>
+                </Link>
               ))}
             </div>
           </div>
@@ -97,7 +87,7 @@ export function Footer() {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-muted-foreground">
-              {footer.social.builtWith}
+              {t('social.builtWith')}
             </div>
             <div className="flex space-x-6">
               <a 

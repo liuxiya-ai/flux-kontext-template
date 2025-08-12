@@ -149,5 +149,51 @@
     "getStarted": "Get Started",
     "learnMore": "Learn More",
     "tryNow": "Try Now"
+  },
+  "generator": {
+    "left": {
+      "selectModule": "Select module",
+      "uploadImage": "Upload image",
+      "uploading": "Uploading...",
+      "roomType": "Room type",
+      "renderStyle": "Render style",
+      "aspectRatio": "Aspect ratio",
+      "generating": "Generating...",
+      "generate": "Generate"
+    },
+    "right": {
+      "generating": "Generating image...",
+      "generatingNote": "Please wait while the AI generates a high-quality render for you",
+      "cancel": "Cancel",
+      "failed": "Generation Failed",
+      "tryAgain": "Try Again",
+      "results": "Generated Results",
+      "generatedIn": "Generated in {seconds}s",
+      "input": "Input Image",
+      "output": "Realistic Render",
+      "examplePlaceholder": "Example images will be shown here."
+    },
+    "modules": {
+      "inspire": {
+        "title": "Inspiration in Seconds",
+        "description": "Spark new ideas instantly. Upload a sketch to generate multiple architectural design concepts for rapid brainstorming and visualization."
+      },
+      "exterior": {
+        "title": "From Model to Masterpiece",
+        "description": "Instantly upgrade your SketchUp, Revit, or CAD models to photorealistic architectural renderings in a single click."
+      },
+      "interior": {
+        "title": "Interior Render Generator",
+        "description": "Upload a photo, sketch, or 3D model of an interior space. Choose a similarity level to match creative needs. Describe your desired room environment with a prompt (e.g., ‘modern living room, cozy ambiance’). Select room type and style. Adjust render performance for speed or quality."
+      },
+      "modify": {
+        "title": "Pixel-Perfect Edits, Instantly",
+        "description": "Effortlessly handle last-minute client revisions. Select any area of your final rendering and modify it with a simple text command"
+      },
+      "night-scene": {
+        "title": "Perfect Night Renders, Zero Setup",
+        "description": "Instantly transform any daytime model or render into a professional, atmospheric night scene with a single click."
+      }
+    }
   }
 } 

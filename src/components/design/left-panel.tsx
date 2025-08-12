@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { designModules, DesignModule } from '@/lib/config/design-modules'
 import { DesignState } from './design-page-content'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 // 导入所有需要的 Shadcn UI 组件
 import { Label } from '@/components/ui/label'
@@ -55,6 +56,7 @@ export function LeftPanel({
   onGenerate, // 新增：接收生成函数
 }: LeftPanelProps) {
   const { selectedModule } = state
+  const t = useTranslations('generator.left')
 
   // 渲染下拉菜单的函数
   const renderSelect = (
@@ -84,7 +86,7 @@ export function LeftPanel({
     <div className="p-6 space-y-6">
       {/* 模块选择器 */}
       <div>
-        <Label className="text-lg font-semibold">Select module*</Label>
+        <Label className="text-lg font-semibold">{t('selectModule')}</Label>
         <div className="grid grid-cols-3 gap-3 mt-4">
           {designModules.map(module => (
             <button
@@ -116,22 +118,20 @@ export function LeftPanel({
 
       {/* 动态参数区域 */}
       <div className="space-y-6">
-        {/* 根据选定模块的配置动态渲染控件 */}
-
         {/* 图片上传 */}
         {selectedModule.controls.requiresInputImage && (
           <div className="space-y-2">
-            <Label className="text-base font-semibold">Upload image*</Label>
+            <Label className="text-base font-semibold">{t('uploadImage')}</Label>
             {state.isUploading && (
-              <p className="text-sm text-muted-foreground">Uploading...</p>
+              <p className="text-sm text-muted-foreground">{t('uploading')}</p>
             )}
-              <ImageUploader 
-                value={state.inputImage}
-                onChange={file => setState({ inputImage: file })}
+            <ImageUploader 
+              value={state.inputImage}
+              onChange={file => setState({ inputImage: file })}
               inputTypes={selectedModule.controls.inputTypes}
               selectedType={state.inputType}
               onTypeChange={type => setState({ inputType: type })}
-              />
+            />
           </div>
         )}
 
@@ -148,7 +148,7 @@ export function LeftPanel({
         {/* 相似度 */}
         {selectedModule.controls.requiresSimilarityLevel && (
           <SimilaritySelector
-              value={state.similarityLevel}
+            value={state.similarityLevel}
             onChange={value => setState({ similarityLevel: value })}
           />
         )}
@@ -156,35 +156,35 @@ export function LeftPanel({
         {/* 房间类型 */}
         {selectedModule.controls.roomTypes && (
           renderSelect(
-            'Room type*',
+            t('roomType'),
             state.roomType,
             value => setState({ roomType: value }),
             selectedModule.controls.roomTypes
           )
-          )}
+        )}
 
         {/* 渲染风格 */}
         {selectedModule.controls.renderStyles && (
           renderSelect(
-            'Render style*',
+            t('renderStyle'),
             state.renderStyle,
             value => setState({ renderStyle: value }),
             selectedModule.controls.renderStyles
           )
-          )}
+        )}
 
         {/* 渲染性能 */}
         {selectedModule.controls.requiresRenderPerformance && (
           <PerformanceSlider
             value={state.renderPerformance}
             onChange={value => setState({ renderPerformance: value })}
-            />
+          />
         )}
 
         {/* 新增：纵横比选择器 */}
         {selectedModule.controls.aspectRatios && (
-            <div>
-            <Label className="text-base font-semibold">Select the Aspect Ratio</Label>
+          <div>
+            <Label className="text-base font-semibold">{t('aspectRatio')}</Label>
             <Select value={state.aspectRatio} onValueChange={value => setState({ aspectRatio: value })}>
               <SelectTrigger className="mt-2">
                 <SelectValue />
@@ -199,40 +199,25 @@ export function LeftPanel({
             </Select>
           </div>
         )}
-
-        {/* 高级设置 (种子, 图片数量等) */}
-        {(selectedModule.controls.requiresAdvancedSettings ||
-          selectedModule.controls.requiresSeedInput ||
-          selectedModule.controls.requiresImageCount) && (
-          <AdvancedSettings
-            seed={state.seed}
-            onSeedChange={s => setState({ seed: s })}
-            numberOfImages={state.numberOfImages}
-            onNumberOfImagesChange={n => setState({ numberOfImages: n })}
-            // 根据配置决定是否显示控件
-            showSeedInput={selectedModule.controls.requiresSeedInput ?? selectedModule.controls.requiresAdvancedSettings}
-            showImageCount={selectedModule.controls.requiresImageCount ?? selectedModule.controls.requiresAdvancedSettings}
-          />
-        )}
       </div>
 
       {/* 生成按钮 */}
-        <div className="border-t border-border pt-6">
+      <div className="border-t border-border pt-6">
         <Button
           size="lg"
           className="w-full text-lg font-bold"
           onClick={onGenerate}
-          disabled={state.isGenerating} // 生成时禁用按钮
+          disabled={state.isGenerating}
         >
           {state.isGenerating ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              Generating...
+              {t('generating')}
             </>
           ) : (
-            'Generate'
+            t('generate')
           )}
-          </Button>
+        </Button>
       </div>
     </div>
   )

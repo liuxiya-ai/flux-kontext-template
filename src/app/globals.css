@@ -360,3 +360,24 @@
   }
 }
 /* Force CSS refresh - 05/28/2025 18:43:11 */
+
+/* 添加浏览器前缀，修复兼容性问题 */
+:host {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+[data-nextjs-dialog-backdrop] {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+[data-nextjs-container-errors-pseudo-html-collapse='true'] .nextjs__container_errors__component-stack code {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, black 10%);
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, black 10%);
+}
+
+.dev-tools-indicator-item {
+  -webkit-user-select: none;
+  user-select: none;
+}

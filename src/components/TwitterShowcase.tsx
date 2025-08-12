@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
-// 导入文案系统
-import { twitterShowcase } from "@/lib/content"
+import { useTranslations } from 'next-intl'
 
 interface TwitterEmbed {
   id: string
@@ -51,6 +50,7 @@ const twitterEmbeds: TwitterEmbed[] = [
 
 export function TwitterShowcase() {
   const scrollRef = useRef<HTMLDivElement>(null)
+  const t = useTranslations('twitterShowcase');
 
   // 滚动函数
   const scroll = (direction: 'left' | 'right') => {
@@ -97,7 +97,7 @@ export function TwitterShowcase() {
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
             <h2 className="text-3xl md:text-4xl font-bold gradient-text">
-              {twitterShowcase.title}
+              {t('title')}
             </h2>
             {/* 滚动按钮 - 移到右侧 */}
             <div className="flex space-x-2 ml-8">
@@ -125,7 +125,7 @@ export function TwitterShowcase() {
           </div>
           
           <p className="text-lg text-foreground/90 max-w-4xl mx-auto leading-relaxed mb-4">
-            {twitterShowcase.description}
+            {t('description')}
           </p>
           
           {/* 滑动提示 - 简化样式 */}
@@ -133,7 +133,7 @@ export function TwitterShowcase() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            <span>{twitterShowcase.scrollHint}</span>
+            <span>{t('scrollHint')}</span>
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>

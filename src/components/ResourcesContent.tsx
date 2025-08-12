@@ -1,6 +1,7 @@
 "use client"
 
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
+import Script from "next/script"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/Navigation"
 import { Footer } from "@/components/Footer"

@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 import { Button } from "@/components/ui/button"
 // 导入文案系统
 import { home, common } from "@/lib/content"
