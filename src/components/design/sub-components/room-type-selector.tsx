@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { SelectOption } from '@/lib/config/design-modules'
+import { useTranslations } from 'next-intl'
 
 interface RoomTypeSelectorProps {
   options: SelectOption[]
@@ -22,9 +23,10 @@ export function RoomTypeSelector({
   value,
   onChange,
 }: RoomTypeSelectorProps) {
+  const t = useTranslations('generator.left')
   return (
     <div>
-      <Label className="text-base font-semibold">Room type*</Label>
+      <Label className="text-base font-semibold">{t('roomType')}</Label>
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="mt-2">
           <SelectValue />

@@ -10,6 +10,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useTranslations } from 'next-intl'
 
 interface PromptInputProps {
   prompt: string
@@ -24,18 +25,19 @@ export function PromptInput({
   negativePrompt,
   onNegativePromptChange,
 }: PromptInputProps) {
+  const t = useTranslations('generator.prompt')
   return (
     <>
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <Label htmlFor="prompt">Prompt</Label>
+          <Label htmlFor="prompt">{t('label')}</Label>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <Info className="h-4 w-4 text-muted-foreground" />
               </TooltipTrigger>
               <TooltipContent>
-                <p>Describe the image, e.g. modern villa, wooden facade...</p>
+                <p>{t('placeholder')}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -44,19 +46,19 @@ export function PromptInput({
           id="prompt"
           value={prompt}
           onChange={e => onPromptChange(e.target.value)}
-          placeholder="Describe the image, e.g. modern villa, wooden facade..."
+          placeholder={t('placeholder')}
         />
       </div>
       <div className="space-y-2">
         <div className="flex items-center gap-2">
-          <Label htmlFor="negative-prompt">Negative prompt</Label>
+          <Label htmlFor="negative-prompt">{t('negative')}</Label>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
                 <Info className="h-4 w-4 text-muted-foreground" />
               </TooltipTrigger>
               <TooltipContent>
-                <p>Remove from final render, e.g. rainy, straight lines, ...</p>
+                <p>{t('negativePlaceholder')}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -65,7 +67,7 @@ export function PromptInput({
           id="negative-prompt"
           value={negativePrompt}
           onChange={e => onNegativePromptChange(e.target.value)}
-          placeholder="Remove from final render, e.g. rainy, straight lines, ..."
+          placeholder={t('negativePlaceholder')}
         />
       </div>
     </>

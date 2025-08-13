@@ -152,14 +152,38 @@
   },
   "generator": {
     "left": {
-      "selectModule": "Select module",
-      "uploadImage": "Upload image",
-      "uploading": "Uploading...",
-      "roomType": "Room type",
-      "renderStyle": "Render style",
-      "aspectRatio": "Aspect ratio",
-      "generating": "Generating...",
-      "generate": "Generate"
+      "selectModule": "选择模块",
+      "uploadImage": "上传图片",
+      "uploading": "正在上传...",
+      "roomType": "房间类型*",
+      "renderStyle": "渲染风格*",
+      "aspectRatio": "选择纵横比",
+      "generating": "正在生成...",
+      "generate": "开始生成",
+      "inputType": "输入类型",
+      "similarity": "相似度*",
+      "similar": "相似",
+      "balanced": "平衡",
+      "creative": "创意",
+      "preciseLabel": "精确:",
+      "preciseDesc": "更加贴合上传图像",
+      "creativeLabel": "创意:",
+      "creativeDesc": "生成更灵活的选项",
+      "performance": "渲染性能",
+      "fast": "更快",
+      "quality": "最佳质量"
+    },
+    "uploader": {
+      "upload": "+ 上传图片",
+      "drag": "拖拽或点击上传",
+      "max": "最大文件 15MB",
+      "previewAlt": "图片预览"
+    },
+    "prompt": {
+      "label": "提示词",
+      "placeholder": "描述图像，例如：现代别墅、木质立面...",
+      "negative": "反向提示词",
+      "negativePlaceholder": "不希望出现的元素，例如：雨天、直线..."
     },
     "right": {
       "generating": "正在生成图片...",
@@ -174,25 +198,42 @@
       "examplePlaceholder": "示例图片将在这里显示"
     },
     "modules": {
-      "inspire": {
-        "title": "瞬间灵感",
-        "description": "快速激发灵感。上传草图即可生成多组建筑设计概念，用于快速头脑风暴与可视化。"
+      "inspire": { "title": "灵感构思", "description": "快速激发灵感。上传草图即可生成多组建筑设计概念，用于快速头脑风暴与可视化。" },
+      "exterior": { "title": "外部渲染", "description": "一键将模型升级为照片级外部渲染。" },
+      "interior": { "title": "室内渲染", "description": "上传室内图片/草图/模型，选择风格与相似度，快速得到室内渲染。" },
+      "modify": { "title": "精确修改", "description": "选中成图任意区域，用文本命令精确修改。" },
+      "night-scene": { "title": "夜景", "description": "将日景一键转换为专业夜景效果。" }
+    },
+    "moduleNames": {
+      "inspire": "灵感构思",
+      "exterior": "外部渲染",
+      "interior": "室内渲染",
+      "modify": "精确修改",
+      "night-scene": "夜景"
+    },
+    "options": {
+      "inputTypes": {
+        "photo": "照片",
+        "sketch": "草图",
+        "3d-model": "3D 模型"
       },
-      "exterior": {
-        "title": "从模型到大师级作品",
-        "description": "一键将 SketchUp、Revit 或 CAD 模型升级为照片级真实建筑渲染。"
+      "roomTypes": {
+        "living-room": "客厅",
+        "bedroom": "卧室",
+        "kitchen": "厨房",
+        "bathroom": "卫生间",
+        "office": "办公室"
       },
-      "interior": {
-        "title": "室内渲染生成器",
-        "description": "上传室内照片、草图或 3D 模型。根据创作需求选择相似度。用提示词描述目标空间（例如：现代客厅、温馨氛围）。选择房间类型与风格，并可在速度与质量间调节渲染性能。"
+      "renderStyles": {
+        "no-style": "— 无风格 —",
+        "modern": "现代",
+        "minimalist": "极简",
+        "scandinavian": "北欧",
+        "bohemian": "波西米亚",
+        "industrial": "工业"
       },
-      "modify": {
-        "title": "像素级精修，瞬间完成",
-        "description": "轻松应对客户的临时修改。选中成图任意区域，用简单文本命令即可修改。"
-      },
-      "night-scene": {
-        "title": "一键夜景，无需设置",
-        "description": "将任意白天模型或渲染一键转换为专业、氛围感十足的夜景效果。"
+      "aspectRatios": {
+        "default": "默认"
       }
     }
   }

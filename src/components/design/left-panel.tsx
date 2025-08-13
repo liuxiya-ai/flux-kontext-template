@@ -36,7 +36,6 @@ import { SimilaritySelector } from './sub-components/similarity-selector'
 import { RoomTypeSelector } from './sub-components/room-type-selector'
 import { StyleSelector } from './sub-components/style-selector'
 import { PerformanceSlider } from './sub-components/performance-slider'
-import { AdvancedSettings } from './sub-components/advanced-settings'
 import { AspectRatioSelector } from './sub-components/aspect-ratio-selector'
 
 interface LeftPanelProps {
@@ -56,7 +55,10 @@ export function LeftPanel({
   onGenerate, // 新增：接收生成函数
 }: LeftPanelProps) {
   const { selectedModule } = state
-  const t = useTranslations('generator.left')
+  const tLeft = useTranslations('generator.left')
+  const tModules = useTranslations('generator.modules')
+  const tOptions = useTranslations('generator.options')
+  const tNames = useTranslations('generator.moduleNames')
 
   // 渲染下拉菜单的函数
   const renderSelect = (
@@ -82,11 +84,29 @@ export function LeftPanel({
     </div>
   )
 
+  // 本地化选项工具函数
+  function localizeOptions(
+    options: { value: string; label: string }[] | undefined,
+    group: 'inputTypes' | 'roomTypes' | 'renderStyles' | 'aspectRatios'
+  ) {
+    if (!options || options.length === 0) return options || []
+    return options.map(opt => ({
+      value: opt.value,
+      label: tOptions.optional(`${group}.${opt.value}`) ?? opt.label
+    }))
+  }
+
+  // 预先本地化各种选项
+  const localizedInputTypes = localizeOptions(selectedModule.controls.inputTypes, 'inputTypes')
+  const localizedRoomTypes = localizeOptions(selectedModule.controls.roomTypes, 'roomTypes')
+  const localizedRenderStyles = localizeOptions(selectedModule.controls.renderStyles, 'renderStyles')
+  const localizedAspectRatios = localizeOptions(selectedModule.controls.aspectRatios, 'aspectRatios')
+
   return (
     <div className="p-6 space-y-6">
       {/* 模块选择器 */}
       <div>
-        <Label className="text-lg font-semibold">{t('selectModule')}</Label>
+        <Label className="text-lg font-semibold">{tLeft('selectModule')}</Label>
         <div className="grid grid-cols-3 gap-3 mt-4">
           {designModules.map(module => (
             <button
@@ -101,12 +121,12 @@ export function LeftPanel({
             >
               <Image
                 src={module.image}
-                alt={module.name}
+                alt={tModules(`${module.id}.title`)}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
               />
               <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-2 text-center">
-                <p className="text-sm font-bold text-white">{module.name}</p>
+                <p className="text-sm font-bold text-white">{tNames(`${module.id}`)}</p>
               </div>
             </button>
           ))}
@@ -121,14 +141,14 @@ export function LeftPanel({
         {/* 图片上传 */}
         {selectedModule.controls.requiresInputImage && (
           <div className="space-y-2">
-            <Label className="text-base font-semibold">{t('uploadImage')}</Label>
+            <Label className="text-base font-semibold">{tLeft('uploadImage')}</Label>
             {state.isUploading && (
-              <p className="text-sm text-muted-foreground">{t('uploading')}</p>
+              <p className="text-sm text-muted-foreground">{tLeft('uploading')}</p>
             )}
             <ImageUploader 
               value={state.inputImage}
               onChange={file => setState({ inputImage: file })}
-              inputTypes={selectedModule.controls.inputTypes}
+              inputTypes={localizedInputTypes}
               selectedType={state.inputType}
               onTypeChange={type => setState({ inputType: type })}
             />
@@ -155,22 +175,20 @@ export function LeftPanel({
 
         {/* 房间类型 */}
         {selectedModule.controls.roomTypes && (
-          renderSelect(
-            t('roomType'),
-            state.roomType,
-            value => setState({ roomType: value }),
-            selectedModule.controls.roomTypes
-          )
+          <RoomTypeSelector
+            options={localizedRoomTypes}
+            value={state.roomType}
+            onChange={value => setState({ roomType: value })}
+          />
         )}
 
         {/* 渲染风格 */}
         {selectedModule.controls.renderStyles && (
-          renderSelect(
-            t('renderStyle'),
-            state.renderStyle,
-            value => setState({ renderStyle: value }),
-            selectedModule.controls.renderStyles
-          )
+          <StyleSelector
+            options={localizedRenderStyles}
+            value={state.renderStyle}
+            onChange={value => setState({ renderStyle: value })}
+          />
         )}
 
         {/* 渲染性能 */}
@@ -184,13 +202,13 @@ export function LeftPanel({
         {/* 新增：纵横比选择器 */}
         {selectedModule.controls.aspectRatios && (
           <div>
-            <Label className="text-base font-semibold">{t('aspectRatio')}</Label>
+            <Label className="text-base font-semibold">{tLeft('aspectRatio')}</Label>
             <Select value={state.aspectRatio} onValueChange={value => setState({ aspectRatio: value })}>
               <SelectTrigger className="mt-2">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {selectedModule.controls.aspectRatios.map(option => (
+                {localizedAspectRatios.map(option => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>
@@ -212,10 +230,10 @@ export function LeftPanel({
           {state.isGenerating ? (
             <>
               <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-              {t('generating')}
+              {tLeft('generating')}
             </>
           ) : (
-            t('generate')
+            tLeft('generate')
           )}
         </Button>
       </div>

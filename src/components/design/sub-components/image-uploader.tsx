@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { UploadCloud, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { useTranslations } from 'next-intl'
 
 interface SelectOption {
   value: string
@@ -17,7 +18,6 @@ interface SelectOption {
 interface ImageUploaderProps {
   value: File | null
   onChange: (file: File | null) => void
-  // 🆕 添加可选的 props 以支持未来扩展，允许空字符串和undefined
   inputTypes?: SelectOption[]
   selectedType?: string | null | undefined
   onTypeChange?: (type: string) => void
@@ -30,25 +30,22 @@ export function ImageUploader({
   selectedType,
   onTypeChange
 }: ImageUploaderProps) {
+  const tLeft = useTranslations('generator.left')
+  const tUp = useTranslations('generator.uploader')
   const [preview, setPreview] = useState<string | null>(null)
 
-  // 当 value (来自父组件的File对象) 变化时，创建或撤销预览 URL
   useEffect(() => {
     if (!value) {
       setPreview(null)
       return
     }
-
     const objectUrl = URL.createObjectURL(value)
     setPreview(objectUrl)
-
-    // 清理函数：当组件卸载或 value 变化时，释放内存
     return () => URL.revokeObjectURL(objectUrl)
   }, [value])
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
-      // 只取第一个文件
       const file = acceptedFiles[0]
       if (file) {
         onChange(file)
@@ -68,11 +65,10 @@ export function ImageUploader({
   })
 
   const handleRemoveImage = (e: React.MouseEvent) => {
-    e.stopPropagation() // 防止触发 onDrop
+    e.stopPropagation()
     onChange(null)
   }
 
-  // 检查是否需要显示类型选择器：需要有 inputTypes、selectedType 非空且有 onTypeChange 函数
   const shouldShowTypeSelector = inputTypes && 
     inputTypes.length > 0 && 
     selectedType !== null && 
@@ -80,14 +76,12 @@ export function ImageUploader({
     selectedType !== '' && 
     onTypeChange
 
-  // 如果有图片预览
   if (preview) {
     return (
       <div className="space-y-3">
-        {/* 🆕 如果提供了 inputTypes，显示类型选择器 */}
         {shouldShowTypeSelector && (
           <div className="space-y-2">
-            <label className="text-sm font-medium">Input Type</label>
+            <label className="text-sm font-medium">{tLeft('inputType')}</label>
             <select 
               value={selectedType || ''}
               onChange={(e) => onTypeChange!(e.target.value)}
@@ -105,7 +99,7 @@ export function ImageUploader({
         <div className="relative aspect-[4/3] w-full">
           <Image
             src={preview}
-            alt="Image preview"
+            alt={tUp('previewAlt')}
             fill
             className="object-cover rounded-lg border"
           />
@@ -122,13 +116,11 @@ export function ImageUploader({
     )
   }
 
-  // 如果没有图片预览，显示上传区域
   return (
     <div className="space-y-3">
-      {/* 🆕 如果提供了 inputTypes，显示类型选择器 */}
       {shouldShowTypeSelector && (
         <div className="space-y-2">
-          <label className="text-sm font-medium">Input Type</label>
+          <label className="text-sm font-medium">{tLeft('inputType')}</label>
           <select 
             value={selectedType || ''}
             onChange={(e) => onTypeChange!(e.target.value)}
@@ -154,13 +146,13 @@ export function ImageUploader({
         <CardContent className="text-center p-6">
           <UploadCloud className="mx-auto h-10 w-10 text-muted-foreground mb-2" />
           <Button variant="outline" type="button" className="pointer-events-none">
-            + UPLOAD IMAGE
+            {tUp('upload')}
           </Button>
           <p className="text-xs text-muted-foreground mt-2">
-              Drag 'n' drop or click to upload
+            {tUp('drag')}
           </p>
-           <p className="text-xs text-muted-foreground mt-1">
-              Max File Size 15MB
+          <p className="text-xs text-muted-foreground mt-1">
+            {tUp('max')}
           </p>
         </CardContent>
       </Card>

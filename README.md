@@ -321,6 +321,15 @@ npm run dev
 - ✅ 删除 `src/app/page.tsx`，避免覆盖 `src/app/[locale]/page.tsx`
 - ✅ 结果：`/` 正确走 i18n 默认语言（zh），页面不再空白
 
+### 2025-01-30 - i18n 体系完善与生成页全面国际化
+- ✅ 启用 next-intl 标准架构（`[locale]` + 中间件），默认中文 `/zh`，英文 `/en`
+- ✅ 导航统一 `@/i18n/navigation`，修复前缀与404问题
+- ✅ 生成页：左/右面板、上传/提示词/相似度/渲染性能等全部国际化
+- ✅ 模块卡片名使用短名 `generator.moduleNames`（避免英文堆叠），右侧说明使用 `generator.modules`
+- ✅ 选项枚举统一通过 `generator.options.*` 映射（inputTypes/roomTypes/renderStyles/aspectRatios）
+- ✅ 删除 `src/app/resources/*` 按需求移除资源页
+- 📄 文档：新增《i18n 使用手册》：`docs/i18n-usage-manual.md`
+
 ### 2025-01-20 - 网络问题诊断与解决
 - ✅ **Ngrok 隧道配置**: 成功配置 ngrok 公共隧道，解决 localhost 无法被外部服务访问的问题
 - ✅ **环境变量配置**: 配置 `NEXT_PUBLIC_APP_URL` 环境变量，支持动态 URL 切换

@@ -155,11 +155,23 @@
       "selectModule": "Select module",
       "uploadImage": "Upload image",
       "uploading": "Uploading...",
-      "roomType": "Room type",
-      "renderStyle": "Render style",
+      "roomType": "Room type*",
+      "renderStyle": "Render style*",
       "aspectRatio": "Aspect ratio",
       "generating": "Generating...",
-      "generate": "Generate"
+      "generate": "Generate",
+      "inputType": "Input Type",
+      "similarity": "Similarity level*",
+      "similar": "Similar",
+      "balanced": "Balanced",
+      "creative": "Creative",
+      "preciseLabel": "Precise:",
+      "preciseDesc": "Attention to uploaded image.",
+      "creativeLabel": "Creative:",
+      "creativeDesc": "Generates flexible options.",
+      "performance": "Render performance",
+      "fast": "Fast render",
+      "quality": "Best quality"
     },
     "right": {
       "generating": "Generating image...",
@@ -193,6 +205,50 @@
       "night-scene": {
         "title": "Perfect Night Renders, Zero Setup",
         "description": "Instantly transform any daytime model or render into a professional, atmospheric night scene with a single click."
+      }
+    },
+    "moduleNames": {
+      "inspire": "Inspire",
+      "exterior": "Exterior",
+      "interior": "Interior",
+      "modify": "Modify",
+      "night-scene": "Night Scene"
+    },
+    "uploader": {
+      "upload": "+ UPLOAD IMAGE",
+      "drag": "Drag 'n' drop or click to upload",
+      "max": "Max File Size 15MB",
+      "previewAlt": "Image preview"
+    },
+    "prompt": {
+      "label": "Prompt",
+      "placeholder": "Describe the image, e.g. modern villa, wooden facade...",
+      "negative": "Negative prompt",
+      "negativePlaceholder": "Remove from final render, e.g. rainy, straight lines, ..."
+    },
+    "options": {
+      "inputTypes": {
+        "photo": "Photo",
+        "sketch": "Sketch",
+        "3d-model": "3D Model"
+      },
+      "roomTypes": {
+        "living-room": "Living Room",
+        "bedroom": "Bedroom",
+        "kitchen": "Kitchen",
+        "bathroom": "Bathroom",
+        "office": "Office"
+      },
+      "renderStyles": {
+        "no-style": "— NO STYLE —",
+        "modern": "Modern",
+        "minimalist": "Minimalist",
+        "scandinavian": "Scandinavian",
+        "bohemian": "Bohemian",
+        "industrial": "Industrial"
+      },
+      "aspectRatios": {
+        "default": "Default"
       }
     }
   }

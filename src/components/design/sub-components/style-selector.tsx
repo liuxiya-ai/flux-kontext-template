@@ -10,6 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { SelectOption } from '@/lib/config/design-modules'
+import { useTranslations } from 'next-intl'
 
 interface StyleSelectorProps {
   options: SelectOption[]
@@ -22,9 +23,10 @@ export function StyleSelector({
   value,
   onChange,
 }: StyleSelectorProps) {
+  const t = useTranslations('generator.left')
   return (
     <div>
-      <Label className="text-base font-semibold">Render style*</Label>
+      <Label className="text-base font-semibold">{t('renderStyle')}</Label>
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="mt-2">
           <SelectValue />
