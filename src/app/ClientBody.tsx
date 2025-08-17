@@ -11,9 +11,13 @@ export default function ClientBody({
 }) {
   const pathname = usePathname();
   
-  // 判断是否为功能页面（排除动画的路径）
-  // 在视频生成相关页面禁用动效，避免影响用户操作
-  const isFunctionalPath = pathname.startsWith('/dashboard') || pathname.startsWith('/generate');
+  // 只在首页和定价页面显示鼠标烟花效果
+  const shouldShowSplashCursor = pathname === '/' || 
+                                 pathname === '/zh' || 
+                                 pathname === '/en' || 
+                                 pathname === '/pricing' || 
+                                 pathname === '/zh/pricing' || 
+                                 pathname === '/en/pricing';
   
   // Remove any extension-added classes during hydration
   useEffect(() => {
@@ -23,8 +27,8 @@ export default function ClientBody({
 
   return (
     <div className="antialiased">
-      {/* 全局流体光标动效 - 排除功能页面 */}
-      {!isFunctionalPath && <SplashCursor />}
+      {/* 鼠标烟花效果 - 只在首页和定价页面显示 */}
+      {shouldShowSplashCursor && <SplashCursor />}
       {children}
     </div>
   );
