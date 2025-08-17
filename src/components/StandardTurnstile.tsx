@@ -341,7 +341,7 @@ export function StandardTurnstile({
           setIsLoading(false)
         })
     }
-  }, [checkScriptLoaded, loadTurnstileScript, renderTurnstile])
+  }, [checkScriptLoaded, loadTurnstileScript, renderTurnstile, retryCount, isLoading, hasError, isVerified])
 
   // 组件初始化的useEffect钩子
   useEffect(() => {

@@ -3,10 +3,7 @@ import createMiddleware from 'next-intl/middleware';
 import { routing } from './src/i18n/routing';
 
 // 使用 next-intl 官方写法创建中间件
-const intlMiddleware = createMiddleware(routing, {
-  // 关闭自动语言检测，避免不必要的跳转
-  localeDetection: false
-});
+const intlMiddleware = createMiddleware(routing);
 
 // 添加安全头的辅助函数
 function addSecurityHeaders(response: NextResponse) {
