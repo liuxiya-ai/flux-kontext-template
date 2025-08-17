@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { Link } from "@/i18n/navigation"
@@ -16,7 +16,13 @@ export function SignUpContent() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
+  const [isClient, setIsClient] = useState(false)
   const router = useRouter()
+
+  // 确保只在客户端渲染
+  useEffect(() => {
+    setIsClient(true)
+  }, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -94,6 +100,20 @@ export function SignUpContent() {
       setError("Sign up failed, please try again")
       setIsLoading(false)
     }
+  }
+
+  // 如果还没有客户端渲染，显示加载状态
+  if (!isClient) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <div className="w-8 h-8 mx-auto animate-spin rounded-full border-2 border-primary border-t-transparent"></div>
+            <p className="mt-4 text-muted-foreground">Loading...</p>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (

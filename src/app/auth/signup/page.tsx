@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   },
 }
 
+// 禁用静态生成，强制客户端渲染
+export const dynamic = 'force-dynamic'
+
 // 加载组件
 function SignUpLoading() {
   return (
