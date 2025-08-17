@@ -145,7 +145,7 @@ export function SmartImagePreview({ url, alt, index, onRemove }: SmartImagePrevi
       }
       img.src = currentUrl
     }
-  }, [currentUrl, index])
+  }, [currentUrl, index, handleImageError])
 
   // 🔧 检查blob URL是否仍然有效
   useEffect(() => {

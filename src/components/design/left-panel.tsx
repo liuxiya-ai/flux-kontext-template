@@ -92,7 +92,7 @@ export function LeftPanel({
     if (!options || options.length === 0) return options || []
     return options.map(opt => ({
       value: opt.value,
-      label: tOptions.optional(`${group}.${opt.value}`) ?? opt.label
+      label: tOptions.has(`${group}.${opt.value}`) ? tOptions(`${group}.${opt.value}`) : opt.label
     }))
   }
 
