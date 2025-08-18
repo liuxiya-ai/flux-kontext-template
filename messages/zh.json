@@ -4,12 +4,12 @@
     "description": "最佳AI建筑渲染平台。由人工智能驱动。"
   },
   "hero": {
-    "badge": "专业AI图像生成平台",
-    "title": "使用以下工具创建令人惊艳的图像",
+    "badge": "专业建筑效果图渲染平台",
+    "title": "AI建筑渲染，重塑想象",
     "subtitle": "Flux Kontext AI",
-    "description": "使用我们尖端的AI技术将您的想法转化为专业图像。从文本生成图像，编辑现有图像，并使用Flux Kontext AI的强大功能处理多张图像。",
+    "description": "率先体验强大的AI夜景渲染引擎。上传您的日间模型，告别繁琐打光，一键生成氛围感十足的最终效果图。",
     "cta": {
-      "primary": "开始创建",
+      "primary": "立即免费体验",
       "secondary": "查看价格"
     }
   },
