@@ -7,12 +7,21 @@ import { useTranslations } from 'next-intl'; // 导入翻译hook
 
 /**
  * @name KeyFeatures
- * @description 首页核心功能展示区，重点展示夜景渲染功能
+ * @description 首页核心功能展示区，重点展示夜景渲染功能，完全遵循i18n框架
  */
 export function KeyFeatures() {
   // 使用翻译
   const t = useTranslations('features');
-  const nightScene = t.raw('nightScene') as {title: string; subtitle: string; cta: string};
+  const nightScene = t.raw('nightScene') as {
+    title: string; 
+    subtitle: string; 
+    cta: string;
+    imageAlts: {
+      input: string;
+      process: string;
+      output: string;
+    }
+  };
 
   return (
     <section className="py-16 px-4 relative z-20">
@@ -43,7 +52,7 @@ export function KeyFeatures() {
               <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-2xl">
                 <Image
                   src="/images/examples/night-scene-input.webp"
-                  alt="夜景渲染输入示例"
+                  alt={nightScene.imageAlts.input}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
@@ -67,7 +76,7 @@ export function KeyFeatures() {
               <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-2xl">
                 <Image
                   src="/images/examples/inspire-input.webp"
-                  alt="夜景渲染过程示例"
+                  alt={nightScene.imageAlts.process}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
@@ -91,7 +100,7 @@ export function KeyFeatures() {
               <div className="relative w-full aspect-[4/3] rounded-lg overflow-hidden shadow-2xl">
                 <Image
                   src="/images/examples/inspire-output.webp"
-                  alt="夜景渲染输出效果"
+                  alt={nightScene.imageAlts.output}
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"

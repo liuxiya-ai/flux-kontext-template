@@ -19,7 +19,12 @@
     "nightScene": {
       "title": "Featured Function: Night Scene Rendering",
       "subtitle": "✓ Intelligent Professional Lighting\n✓ Cinematic Atmosphere Creation\n✓ Completed in Seconds, Greatly Improved Efficiency",
-      "cta": "Free Trial Now"
+      "cta": "Free Trial Now",
+      "imageAlts": {
+        "input": "Night scene rendering input example",
+        "process": "Night scene rendering process example",
+        "output": "Night scene rendering output effect"
+      }
     },
     "items": [
       {
