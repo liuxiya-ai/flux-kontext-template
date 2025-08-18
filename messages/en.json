@@ -5,7 +5,7 @@
   },
   "hero": {
     "badge": "Professional Architectural Rendering Platform",
-    "title": "AI Architectural Rendering, Reimagining Design",
+    "title": "AI Architectural Renderer",
     "subtitle": "Flux Kontext AI",
     "description": "Experience powerful AI night scene rendering engine. Upload your daytime models, eliminate tedious lighting work, and generate atmospheric final renderings with one click.",
     "cta": {
@@ -16,6 +16,11 @@
   "features": {
     "title": "Key Features of Flux Kontext AI Platform",
     "subtitle": "Our Flux Kontext AI combines cutting-edge technology to deliver professional image generation and editing in one seamless platform.",
+    "nightScene": {
+      "title": "Featured Function: Night Scene Rendering",
+      "subtitle": "✓ Intelligent Professional Lighting\n✓ Cinematic Atmosphere Creation\n✓ Completed in Seconds, Greatly Improved Efficiency",
+      "cta": "Free Trial Now"
+    },
     "items": [
       {
         "title": "Text-to-Image Generation",
