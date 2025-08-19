@@ -2,6 +2,7 @@
 
 import { Link } from "@/i18n/navigation"
 import Script from "next/script"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/Navigation"
 import { TwitterShowcase } from "@/components/TwitterShowcase"
@@ -53,42 +54,78 @@ export function HomeContent() {
         }}
       />
 
-      {/* Hero Section */}
-      <section className="pt-24 pb-16 px-4">
-        <div className="container mx-auto max-w-5xl text-center">
-          <div className="hero-gradient absolute inset-0 pointer-events-none" />
-          <div className="relative z-10">
-            <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm mb-6">
-              {t('badge')}
+      {/* Hero Section - 左右分栏布局 */}
+      <section className="pt-24 pb-16 px-4 relative">
+        <div className="hero-gradient absolute inset-0 pointer-events-none" />
+        <div className="container mx-auto max-w-7xl relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 lg:gap-16 items-center min-h-[600px]">
+            
+            {/* 左侧内容区域 - 占2列，更靠左 */}
+            <div className="lg:col-span-2 flex flex-col justify-center space-y-8 lg:pl-4">
+              {/* Badge */}
+              <div className="inline-flex">
+                <div className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm">
+                  {t('badge')}
+                </div>
+              </div>
+              
+              {/* 主标题 - 支持换行，字体稍小 */}
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight gradient-text whitespace-pre-line">
+                {t('title')}
+              </h1>
+              
+              {/* 副标题描述 - 改为白色 */}
+              <p className="text-lg md:text-xl text-white/90 leading-relaxed max-w-2xl">
+                {t('description')}
+              </p>
+              
+              {/* 按钮区域 - 只保留主要按钮 */}
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link href="/generate">
+                  <Button 
+                    size="lg" 
+                    className="bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all duration-200 px-8 py-4 text-lg font-semibold"
+                  >
+                    <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" fill="currentColor"/>
+                    </svg>
+                    {t('cta.primary')}
+                  </Button>
+                </Link>
+                <Link href="/pricing">
+                  <Button 
+                    variant="outline" 
+                    size="lg" 
+                    className="hover:scale-105 active:scale-95 transition-all duration-200 px-8 py-4 text-lg border-primary/30 text-primary hover:bg-primary/10"
+                  >
+                    {t('cta.secondary')}
+                  </Button>
+                </Link>
+              </div>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-              {t('title')}
-            </h1>
-            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-3xl mx-auto px-4 md:px-0 leading-relaxed">
-              {t('description')}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Link href="/generate">
-                <Button 
-                  size="lg" 
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 hover:scale-105 active:scale-95 transition-all duration-200 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg"
-                >
-                  <svg className="w-4 h-4 md:w-5 md:h-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L2 7V10C2 16 6 20.5 12 22C18 20.5 22 16 22 10V7L12 2Z" fill="currentColor"/>
-                  </svg>
-                  {t('cta.primary')}
-                </Button>
-              </Link>
-              <Link href="/pricing">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="hover:scale-105 active:scale-95 transition-all duration-200 px-6 md:px-8 py-3 md:py-4 text-base md:text-lg"
-                >
-                  {t('cta.secondary')}
-                </Button>
-              </Link>
+
+            {/* 右侧图片区域 - 占4列，更大的图片 */}
+            <div className="lg:col-span-4 flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-2xl lg:max-w-3xl">
+                <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20">
+                  <Image
+                    src="/images/features/interior-ai-render-main.webp"
+                    alt={t('title')}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 55vw"
+                    priority
+                  />
+                  {/* 图片上的装饰效果 */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                </div>
+                
+                {/* 浮动装饰元素 */}
+                <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary/20 rounded-full blur-xl animate-pulse" />
+                <div className="absolute -bottom-6 -left-6 w-12 h-12 bg-accent/20 rounded-full blur-xl animate-pulse delay-1000" />
+              </div>
             </div>
+            
           </div>
         </div>
       </section>
