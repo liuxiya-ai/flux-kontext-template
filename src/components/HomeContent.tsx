@@ -58,19 +58,14 @@ export function HomeContent() {
       <section className="pt-24 pb-16 px-4 relative">
         <div className="hero-gradient absolute inset-0 pointer-events-none" />
         <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-6 gap-16 lg:gap-24 items-center min-h-[600px]">
+          <div className="grid grid-cols-1 lg:grid-cols-6 gap-20 lg:gap-28 items-center min-h-[600px]">
             
             {/* 左侧内容区域 - 占2列，更靠左 */}
-            <div className="lg:col-span-2 flex flex-col justify-center space-y-8 lg:pl-0">
-              {/* Badge */}
-              <div className="inline-flex">
-                <div className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm">
-                  {t('badge')}
-                </div>
-              </div>
+            <div className="lg:col-span-2 flex flex-col justify-center space-y-8 lg:-ml-16">
+              {/* Badge 已移除 */}
               
-              {/* 主标题 - 增大字体大小，确保在同一行显示 */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight gradient-text whitespace-nowrap">
+              {/* 主标题 - 字体小一号，支持换行符显示，行间距加大 */}
+              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-6xl font-bold gradient-text whitespace-pre-line" style={{lineHeight: '1.5'}}>
                 {t('title')}
               </h1>
               
@@ -104,9 +99,9 @@ export function HomeContent() {
               </div>
             </div>
 
-            {/* 右侧图片区域 - 占4列，更大的图片 */}
-            <div className="lg:col-span-4 flex justify-center lg:justify-end">
-              <div className="relative w-full max-w-2xl lg:max-w-3xl">
+            {/* 右侧图片区域 - 占4列，图片向右移动 */}
+            <div className="lg:col-span-4 flex justify-center lg:justify-end lg:mr-0 lg:ml-16">
+              <div className="relative w-full max-w-xl lg:max-w-2xl">
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-primary/10 to-accent/10 backdrop-blur-sm border border-primary/20">
                   <Image
                     src="/images/features/interior-ai-render-main.webp"
