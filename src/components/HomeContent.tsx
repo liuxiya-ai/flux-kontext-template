@@ -58,10 +58,10 @@ export function HomeContent() {
       <section className="pt-24 pb-16 px-4 relative">
         <div className="hero-gradient absolute inset-0 pointer-events-none" />
         <div className="container mx-auto max-w-7xl relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 lg:gap-16 items-center min-h-[600px]">
+          <div className="grid grid-cols-1 lg:grid-cols-6 gap-12 lg:gap-20 items-center min-h-[600px]">
             
             {/* 左侧内容区域 - 占2列，更靠左 */}
-            <div className="lg:col-span-2 flex flex-col justify-center space-y-8 lg:pl-4">
+            <div className="lg:col-span-2 flex flex-col justify-center space-y-8 lg:pl-0">
               {/* Badge */}
               <div className="inline-flex">
                 <div className="px-4 py-2 bg-primary/10 border border-primary/20 rounded-full text-primary text-sm">
@@ -69,8 +69,8 @@ export function HomeContent() {
                 </div>
               </div>
               
-              {/* 主标题 - 支持换行，字体稍小 */}
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight gradient-text whitespace-pre-line">
+              {/* 主标题 - 调整字体大小，确保在同一行显示 */}
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight gradient-text whitespace-nowrap">
                 {t('title')}
               </h1>
               
