@@ -165,33 +165,33 @@
     ]
   },
   "faq": {
-    "title": "Flux Kontext AI - 常见问题",
-    "subtitle": "找到关于我们Flux Kontext AI平台及其强大图像生成功能的常见问题答案。",
-    "description": "找到关于我们Flux Kontext AI平台及其强大图像生成功能的常见问题答案。",
+    "title": "常见问题",
+    "subtitle": "找到关于我们AI Render平台及其强大图像生成功能的常见问题答案。",
+    "description": "找到关于我们AI Render平台及其强大图像生成功能的常见问题答案。",
     "items": [
       {
-        "question": "什么是Flux Kontext AI？",
-        "answer": "Flux Kontext AI是一个先进的图像生成平台，使用尖端人工智能从文本描述创建令人惊艳的图像，编辑现有图像，并同时处理多张图像。"
+        "question": "什么是AI Render？",
+        "answer": "AI Render是一个先进的图像生成平台，使用尖端人工智能从文本描述创建令人惊艳的图像，编辑现有图像，并同时处理多张图像。"
       },
       {
         "question": "文本转图像生成是如何工作的？",
         "answer": "我们的AI分析您的文本描述，并使用先进的Flux Pro和Max模型生成高质量图像。只需描述您想看到的内容，我们的AI就会在几秒钟内创建专业级图像。"
       },
       {
-        "question": "我可以使用Flux Kontext编辑现有图像吗？",
+        "question": "我可以使用AI Render编辑现有图像吗？",
         "answer": "可以！我们的平台支持通过自然语言指令进行图像编辑。上传图像并描述您想要的更改，我们的AI将专业地应用这些修改。"
       },
       {
         "question": "支持哪些图像格式和尺寸？",
-        "answer": "Flux Kontext AI支持多种宽高比，包括1:1、16:9、9:16、4:3、3:2和21:9。您可以以JPEG和PNG格式导出高分辨率图像用于专业用途。"
+        "answer": "AI Render支持多种宽高比，包括1:1、16:9、9:16、4:3、3:2和21:9。您可以以JPEG和PNG格式导出高分辨率图像用于专业用途。"
       },
       {
         "question": "我可以一次生成多少张图像？",
         "answer": "您可以使用我们的多图像处理功能同时生成最多4张图像。这让您能够高效地探索概念的不同变化。"
       },
       {
-        "question": "Flux Kontext与其他AI图像生成器有什么不同？",
-        "answer": "Flux Kontext凭借其先进的Flux Pro和Max模型、专业图像编辑功能、多图像处理和灵活的宽高比支持在一个无缝平台中脱颖而出。"
+        "question": "AI Render与其他AI图像生成器有什么不同？",
+        "answer": "AI Render凭借其先进的Flux Pro和Max模型、专业图像编辑功能、多图像处理和灵活的宽高比支持在一个无缝平台中脱颖而出。"
       },
       {
         "question": "有什么使用限制吗？",
@@ -199,7 +199,7 @@
       },
       {
         "question": "我可以商业使用生成的图像吗？",
-        "answer": "是的，通过Flux Kontext AI生成的图像通常可以用于商业用途。请查看具体的服务条款和许可协议以了解详细的使用权利。"
+        "answer": "是的，通过AI Render生成的图像通常可以用于商业用途。请查看具体的服务条款和许可协议以了解详细的使用权利。"
       }
     ]
   },
