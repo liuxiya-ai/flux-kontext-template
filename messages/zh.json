@@ -17,7 +17,7 @@
     "subtitle": "我们的Flux Kontext AI结合尖端技术，在一个无缝平台中提供专业的图像生成和编辑。",
     "nightScene": {
       "title": "首发功能：夜景渲染",
-      "subtitle": "✓ 智能添加专业光照\n✓ 自动营造电影级氛围\n✓ 数秒内完成，极大提升效率",
+      "subtitle": "✓ 智能添加专业光照\n✓ 自动营造电影级氛围\n✓ 数秒内完成，极大提升效率\n✓ 支持SU截图，照片，渲染图",
       "cta": "立即免费体验",
       "imageAlts": {
         "input": "夜景渲染输入示例",
@@ -37,6 +37,35 @@
       {
         "title": "多图像处理",
         "description": "同时处理多张图像，保持一致的风格和质量。"
+      }
+    ]
+  },
+  "whyChooseUs": {
+    "title": "为什么选择我们？",
+    "items": [
+      {
+        "title": "保障方案的一致性",
+        "description": "我们的智能算法能够理解您的创作意图，确保从概念到最终渲染的整个过程中，设计风格和方案保持高度一致。",
+        "image": "/images/modules/interior.webp",
+        "alt": "保障方案的一致性"
+      },
+      {
+        "title": "几分钟内出图",
+        "description": "告别漫长的渲染等待。我们高效的AI引擎能够在几分钟内生成高质量的效果图，极大提升您的工作效率。",
+        "image": "/images/modules/exterior.webp",
+        "alt": "几分钟内出图"
+      },
+      {
+        "title": "极简的用户操作",
+        "description": "无需复杂的参数设置和学习过程。只需上传您的模型或草图，选择风格，即可一键生成专业级渲染图。",
+        "image": "/images/examples/inspire-output.webp",
+        "alt": "极简的用户操作"
+      },
+      {
+        "title": "高质量渲染大图",
+        "description": "我们支持导出高分辨率的大尺寸图像，满足您在客户演示、作品集展示和印刷品制作中的所有需求。",
+        "image": "/images/features/interior-ai-render-main.webp",
+        "alt": "高质量渲染大图"
       }
     ]
   },
@@ -65,6 +94,35 @@
         "number": "4",
         "title": "下载和展示",
         "description": "预览您的建筑渲染图，进行最后调整，并下载专业可视化效果用于客户展示。"
+      }
+    ]
+  },
+  "whyChooseUs": {
+    "title": "为什么选择我们？",
+    "features": [
+      {
+        "title": "高度还原您的方案",
+        "description": "采用强大的ControlNet技术，精确识别并锁定您的设计结构。告别AI随机变形。",
+        "imageSrc": "/images/modules/inspire.webp",
+        "imageAlt": "AI保障设计方案一致性的示例图"
+      },
+      {
+        "title": "极简的用户操作",
+        "description": "无需复杂的参数设置和专业知识。只需上传您的模型或图片，选择期望的风格，剩下的交给我们。设计，本应如此简单。",
+        "imageSrc": "/images/modules/interior.webp",
+        "imageAlt": "AI渲染平台的极简操作界面示意图"
+      },
+      {
+        "title": "几分钟内出图",
+        "description": "告别漫长的渲染等待。我们强大的云端AI集群能够在几分钟内完成高质量渲染，极大加速您的设计迭代和反馈流程。",
+        "imageSrc": "/images/modules/exterior.webp",
+        "imageAlt": "AI快速出图的建筑渲染示例"
+      },
+      {
+        "title": "高质量渲染大图",
+        "description": "我们支持高达4K分辨率的图像输出，细节清晰，质感真实。无论是用于客户提案、作品集展示还是营销材料，都能满足您的专业需求。",
+        "imageSrc": "/images/features/interior-ai-render-main.webp",
+        "imageAlt": "AI生成的高质量室内渲染大图"
       }
     ]
   },

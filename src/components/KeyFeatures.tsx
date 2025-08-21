@@ -50,7 +50,7 @@ export function KeyFeatures() {
   };
 
   return (
-    <section className="py-16 px-4 relative z-20">
+    <section className="pb-16 px-4 relative z-20">
       <div className="container mx-auto">
 
         {/* 核心功能主展示区 - 新设计 */}

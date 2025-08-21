@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Navigation } from "@/components/Navigation"
 import { TwitterShowcase } from "@/components/TwitterShowcase"
 import { KeyFeatures } from "@/components/KeyFeatures"
+import WhyChooseUs from "@/components/WhyChooseUs"
 import { FAQ } from "@/components/FAQ"
 import { Footer } from "@/components/Footer"
 import { OrganizationSchema, WebSiteSchema, SoftwareApplicationSchema } from "@/components/StructuredData"
@@ -127,6 +128,9 @@ export function HomeContent() {
 
       {/* Key Features Section */}
       <KeyFeatures />
+
+      {/* Why Choose Us Section */}
+      <WhyChooseUs />
 
       {/* Twitter展示区域 */}
       <TwitterShowcase />
