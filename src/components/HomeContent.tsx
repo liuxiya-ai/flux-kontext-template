@@ -8,6 +8,7 @@ import { Navigation } from "@/components/Navigation"
 import { TwitterShowcase } from "@/components/TwitterShowcase"
 import { KeyFeatures } from "@/components/KeyFeatures"
 import WhyChooseUs from "@/components/WhyChooseUs"
+import ComingSoon from "@/components/ComingSoon"
 import { FAQ } from "@/components/FAQ"
 import { Footer } from "@/components/Footer"
 import { OrganizationSchema, WebSiteSchema, SoftwareApplicationSchema } from "@/components/StructuredData"
@@ -131,6 +132,9 @@ export function HomeContent() {
 
       {/* Why Choose Us Section */}
       <WhyChooseUs />
+
+      {/* Coming Soon Section */}
+      <ComingSoon />
 
       {/* Twitter展示区域 */}
       <TwitterShowcase />

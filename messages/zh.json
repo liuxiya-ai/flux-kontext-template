@@ -126,6 +126,44 @@
       }
     ]
   },
+  "comingSoon": {
+    "title": "即将推出",
+    "description": "我们正在不断开发新的AI渲染功能，这里是我们正在进行和计划中的一些新特性。敬请期待！",
+    "inProgress": "进行中",
+    "planned": "计划中",
+    "features": [
+      {
+        "title": "精确修图",
+        "description": "在像素级别对渲染结果进行微调和修正。",
+        "statusKey": "inProgress"
+      },
+      {
+        "title": "一键氛围渲染",
+        "description": "智能匹配天气、季节和光照，一键切换氛围。",
+        "statusKey": "inProgress"
+      },
+      {
+        "title": "草图构思",
+        "description": "将简单的手绘草图转化为富有创意的设计概念。",
+        "statusKey": "planned"
+      },
+      {
+        "title": "风格迁移",
+        "description": "将任意图片的艺术风格应用到您的渲染图中。",
+        "statusKey": "planned"
+      },
+      {
+        "title": "室内家装",
+        "description": "自动进行软装搭配和布局，探索多种室内设计方案。",
+        "statusKey": "planned"
+      },
+      {
+        "title": "图片转模型",
+        "description": "只需上传一张图片，几分钟内即可得到一个高度还原，细节爆炸的3D模型。",
+        "statusKey": "planned"
+      }
+    ]
+  },
   "faq": {
     "title": "Flux Kontext AI - 常见问题",
     "subtitle": "找到关于我们Flux Kontext AI平台及其强大图像生成功能的常见问题答案。",
