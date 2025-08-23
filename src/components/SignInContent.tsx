@@ -4,10 +4,11 @@ import { useState, useEffect } from "react"
 import { signIn, getProviders } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { Link } from "@/i18n/navigation"
-// 导入认证文案模块
-import { auth, common } from "@/lib/content"
+import { useTranslations } from 'next-intl'
 
 export function SignInContent() {
+  const t = useTranslations('auth.signin');
+  const tErrors = useTranslations('auth.signin.errors');
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [isLoading, setIsLoading] = useState(false)
@@ -25,43 +26,27 @@ export function SignInContent() {
     fetchProviders()
   }, [])
 
-  // 检查URL中的错误参数 - 使用auth模块的错误文案
+  // 检查URL中的错误参数
   useEffect(() => {
-    const error = searchParams.get('error')
-    if (error) {
-      switch (error) {
-        case 'OAuthSignin':
-          setError(auth.errors.oauthSignin)
-          break
-        case 'OAuthCallback':
-          setError(auth.errors.oauthCallback)
-          break
-        case 'OAuthCreateAccount':
-          setError(auth.errors.oauthCreateAccount)
-          break
-        case 'EmailCreateAccount':
-          setError(auth.errors.emailCreateAccount)
-          break
-        case 'Callback':
-          setError(auth.errors.callback)
-          break
-        case 'OAuthAccountNotLinked':
-          setError(auth.errors.oauthAccountNotLinked)
-          break
-        case 'EmailSignin':
-          setError(auth.errors.emailSignin)
-          break
-        case 'CredentialsSignin':
-          setError(auth.errors.credentialsSignin)
-          break
-        case 'SessionRequired':
-          setError(auth.errors.sessionRequired)
-          break
-        default:
-          setError(auth.errors.unknown)
-      }
+    const errorKey = searchParams.get('error');
+    if (errorKey) {
+      // 将NextAuth错误键映射到我们的翻译键
+      const errorMapping: { [key: string]: string } = {
+        'OAuthSignin': 'oauthSignin',
+        'OAuthCallback': 'oauthCallback',
+        'OAuthCreateAccount': 'oauthCreateAccount',
+        'EmailCreateAccount': 'emailCreateAccount',
+        'Callback': 'callback',
+        'OAuthAccountNotLinked': 'oauthAccountNotLinked',
+        'EmailSignin': 'emailSignin',
+        'CredentialsSignin': 'credentialsSignin',
+        'SessionRequired': 'sessionRequired',
+        'default': 'unknown'
+      };
+      const mappedKey = errorMapping[errorKey] || errorMapping['default'];
+      setError(tErrors(mappedKey));
     }
-  }, [searchParams])
+  }, [searchParams, tErrors]);
 
   const handleEmailSignIn = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -76,14 +61,14 @@ export function SignInContent() {
       })
 
       if (result?.error) {
-        setError(auth.errors.credentialsSignin)
+        setError(tErrors('credentialsSignin'))
       } else {
         // 获取回调URL或默认跳转到generate页面
         const callbackUrl = searchParams.get('callbackUrl') || '/generate'
         router.push(callbackUrl)
       }
     } catch (error) {
-      setError(common.messages.loginFailed)
+      setError(tErrors('loginFailed'))
     } finally {
       setIsLoading(false)
     }
@@ -92,15 +77,15 @@ export function SignInContent() {
   const handleOAuthSignIn = async (provider: string) => {
     setIsLoading(true)
     setError("")
-    
+
     try {
       const callbackUrl = searchParams.get('callbackUrl') || '/generate'
-      await signIn(provider, { 
+      await signIn(provider, {
         callbackUrl,
-        redirect: true 
+        redirect: true
       })
     } catch (error) {
-      setError(common.messages.loginFailed)
+      setError(tErrors('loginFailed'))
       setIsLoading(false)
     }
   }
@@ -110,9 +95,9 @@ export function SignInContent() {
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-foreground">
-            {auth.signIn.title}
+            {t('title')}
           </h2>
-          
+
           {/* 🎁 登录赠送积分提示 */}
           <div className="mt-4 mx-auto max-w-sm">
             <div className="bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 rounded-lg p-3 text-center">
@@ -121,7 +106,7 @@ export function SignInContent() {
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                 </svg>
                 <span className="text-sm font-medium text-primary">
-                  Sign up and get 100 free credits!
+                  {t('promo')}
                 </span>
                 <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
@@ -129,14 +114,14 @@ export function SignInContent() {
               </div>
             </div>
           </div>
-          
+
           <p className="mt-2 text-center text-sm text-muted-foreground">
-            {auth.signIn.noAccount}{" "}
+            {t('noAccount')}{" "}
             <Link
               href="/auth/signup"
               className="font-medium text-primary hover:text-primary/80 transition-colors"
             >
-              {auth.signIn.createNewAccount}
+              {t('createNewAccount')}
             </Link>
           </p>
         </div>
@@ -170,7 +155,7 @@ export function SignInContent() {
                       d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
                     />
                   </svg>
-                  {isLoading ? common.buttons.signingIn : common.buttons.continueWithGoogle}
+                  {isLoading ? t('signingInButton') : t('withGoogle')}
                 </button>
               )}
 
@@ -184,7 +169,7 @@ export function SignInContent() {
                   <svg className="w-5 h-5 mr-3" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                   </svg>
-                  {isLoading ? common.buttons.signingIn : common.buttons.continueWithGitHub}
+                  {isLoading ? t('signingInButton') : t('withGitHub')}
                 </button>
               )}
             </div>
@@ -197,7 +182,7 @@ export function SignInContent() {
                 <div className="w-full border-t border-border" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-background text-muted-foreground">{auth.signIn.orContinueWith}</span>
+                <span className="px-2 bg-background text-muted-foreground">{t('orContinueWith')}</span>
               </div>
             </div>
           )}
@@ -222,7 +207,7 @@ export function SignInContent() {
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="email" className="sr-only">
-                  Email address
+                  {t('emailLabel')}
                 </label>
                 <input
                   id="email"
@@ -231,7 +216,7 @@ export function SignInContent() {
                   autoComplete="email"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-input placeholder-muted-foreground text-foreground bg-background rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                  placeholder="Email address"
+                  placeholder={t('emailPlaceholder')}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   disabled={isLoading}
@@ -239,7 +224,7 @@ export function SignInContent() {
               </div>
               <div>
                 <label htmlFor="password" className="sr-only">
-                  Password
+                  {t('passwordLabel')}
                 </label>
                 <input
                   id="password"
@@ -248,7 +233,7 @@ export function SignInContent() {
                   autoComplete="current-password"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-input placeholder-muted-foreground text-foreground bg-background rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
-                  placeholder="Password"
+                  placeholder={t('passwordPlaceholder')}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   disabled={isLoading}
@@ -265,13 +250,13 @@ export function SignInContent() {
                   className="h-4 w-4 text-primary focus:ring-primary border-input rounded"
                 />
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-foreground">
-                  Remember me
+                  {t('rememberMe')}
                 </label>
               </div>
 
               <div className="text-sm">
                 <Link href="/auth/forgot-password" className="font-medium text-primary hover:text-primary/80 transition-colors">
-                  Forgot your password?
+                  {t('forgotPassword')}
                 </Link>
               </div>
             </div>
@@ -288,10 +273,10 @@ export function SignInContent() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Signing in...
+                    {t('signingInButton')}
                   </>
                 ) : (
-                  "Sign In"
+                  t('signInButton')
                 )}
               </button>
             </div>
@@ -300,11 +285,11 @@ export function SignInContent() {
           {/* 快捷键提示 */}
           <div className="text-center">
             <p className="text-xs text-muted-foreground">
-              💡 Tip: Press <kbd className="px-2 py-1 text-xs font-semibold text-foreground bg-muted border border-border rounded-lg">Ctrl + Enter</kbd> to sign in quickly
+              💡 {t('tip')}
             </p>
           </div>
         </div>
       </div>
     </div>
   )
-} 
+}

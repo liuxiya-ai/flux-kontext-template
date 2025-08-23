@@ -2,6 +2,28 @@
 
 ## 🚀 最新状态 (根据当前日期)
 
+- **核心变更**: **认证页面 (登录/注册) 国际化改造**
+- **当前状态**: ✅ **完成 `SignIn` 和 `SignUp` 组件的 `next-intl` 迁移**
+
+### 本次更新核心亮点
+
+- ✅ **认证页面国际化**:
+  - `SignInContent` 和 `SignUpContent` 组件已完全重构，移除旧的静态文本系统。
+  - 所有文本（包括标签、按钮、错误消息）现在都通过 `next-intl` 的 `useTranslations` 钩子加载。
+  - 在 `messages/en.json` 和 `messages/zh.json` 中添加了完整的 `auth` 命名空间，支持中英文切换。
+- ✅ **错误处理标准化**:
+  - 统一了 NextAuth 和 Supabase 的错误消息处理，所有错误都映射到翻译文件中的相应条目。
+- ✅ **代码清理**:
+  - 删除了已废弃的 `@/lib/content` 模块。
+
+### 修改的文件清单
+- `src/components/SignInContent.tsx` - **重构**: 迁移到 `next-intl`。
+- `src/components/SignUpContent.tsx` - **重构**: 迁移到 `next-intl`。
+- `messages/en.json` - **更新**: 添加了 `auth` 相关的翻译。
+- `messages/zh.json` - **更新**: 添加了 `auth` 相关的翻译。
+
+---
+
 - **核心变更**: **首页UI现代化重构与内容更新**
 - **当前状态**: ✅ **完成 "首发功能" 与 "为什么选择我们" 板块的全新设计与实现**
 
