@@ -1,11 +1,10 @@
-import { createServerClient, type CookieOptions } from '@supabase/ssr'
-import { type NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
+import { createServerClient } from '@supabase/ssr'
 
-export async function GET(request: NextRequest) {
+export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  // if "next" is in param, use it as the redirect URL
   const next = searchParams.get('next') ?? '/'
 
   if (code) {
@@ -15,24 +14,14 @@ export async function GET(request: NextRequest) {
       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
       {
         cookies: {
-          get(name: string) {
+          get(name) {
             return cookieStore.get(name)?.value
           },
-          set(name: string, value: string, options: CookieOptions) {
-            // The `set` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-            try {
-              cookieStore.set({ name, value, ...options })
-            } catch (error) {}
+          set(name, value, options) {
+            cookieStore.set({ name, value, ...options })
           },
-          remove(name: string, options: CookieOptions) {
-            // The `delete` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
-            try {
-              cookieStore.delete({ name, ...options })
-            } catch (error) {}
+          remove(name, options) {
+            cookieStore.delete({ name, ...options })
           },
         },
       }
@@ -44,6 +33,5 @@ export async function GET(request: NextRequest) {
   }
 
   // return the user to an error page with instructions
-  console.error('Authentication callback error: Invalid code');
   return NextResponse.redirect(`${origin}/auth/error`)
 }
