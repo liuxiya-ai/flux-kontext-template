@@ -56,6 +56,22 @@
 ## 未来新增内容规范
 
 ### A. 新增页面/路由
+### A. 页面存放位置指南：国际化 vs. 非国际化
+
+在添加新页面时，首先要判断该页面是否需要国际化。这决定了它在 `src/app/` 目录下的存放位置。
+
+- **国际化页面 (需要翻译)**:
+  - **存放位置**: `src/app/[locale]/your-page-name/page.tsx`
+  - **适用场景**: 所有面向用户的页面，如首页、定价页、功能介绍页、登录/注册页等。
+  - **URL 结构**: `/{locale}/your-page-name` (例如 `/zh/pricing`)
+
+- **非国际化页面 (不需要翻译)**:
+  - **存放位置**: `src/app/your-page-name/page.tsx`
+  - **适用场景**: 仅限那些路径固定且不面向普通用户的特殊页面，例如管理员后台 (`/admin`) 或仪表盘 (`/dashboard`)。
+  - **URL 结构**: `/your-page-name` (例如 `/dashboard`)
+  - **重要**: 如果创建了非国际化页面，**必须**在 `middleware.ts` 的 `publicRoutes` 数组中将其路径排除，否则中间件仍会尝试添加语言前缀，导致路由错误。
+
+
 1. 在 `src/app/[locale]/` 下添加页面文件（服务器组件优先）。
 2. 如需客户端交互，将交互拆到客户端子组件。
 3. 页面顶部处理：
@@ -94,4 +110,4 @@
 - [ ] 新枚举 value 对应的 `generator.options.*` 已补齐。
 - [ ] 模块卡片名用 `generator.moduleNames.{id}`；右侧说明用 `generator.modules.{id}.*`。
 - [ ] 服务器/客户端边界正确；无硬编码英文。
-- [ ] `generateMetadata` 多语言一致性良好。 
+- [ ] `generateMetadata` 多语言一致性良好。

@@ -59,16 +59,16 @@
 
 ### 🎨 历史布局优化记录 (2025-01-26)
 - **副标题对齐**: 三行特性说明从居中改为左对齐，符合阅读习惯
-- **图片布局重构**: 
+- **图片布局重构**:
   - ✅ 从三列并排改为竖向排列，突出每张图片
   - ✅ 图片比例从4:3改为16:9宽屏比例
   - ✅ 最大宽度增加到3xl，视觉冲击力更强
   - ✅ 统一使用原有图片占位 `interior-ai-render-main.webp`
-- **按钮优化**: 
+- **按钮优化**:
   - ✅ 增大按钮尺寸 `px-8 py-4 text-lg`
   - ✅ 增加图片与按钮间距 `space-y-6`
   - ✅ 保持按钮在图片下方的布局
-- **响应式改进**: 
+- **响应式改进**:
   - ✅ 图片占屏幕80%宽度 `sizes="80vw"`
   - ✅ 容器最大宽度优化为4xl
   - ✅ 移动端和桌面端统一的竖向布局
@@ -87,14 +87,14 @@
   - 🎯 维护性和扩展性大幅提升
 
 ### 🎨 最新功能展示区重构 (2025-01-26)
-- **主标题更新**: 
+- **主标题更新**:
   - 中文: "AI建筑渲染，重塑想象" → "AI建筑渲染器"
   - 英文: "AI Architectural Rendering, Reimagining Design" → "AI Architectural Renderer"
 - **新增夜景功能展示区**:
   - ✅ 主标题: "首发功能：夜景渲染" (使用gradient-text动态渐变样式)
   - ✅ 副标题: 三行特性说明，并列居中显示
     - "✓ 智能添加专业光照"
-    - "✓ 自动营造电影级氛围" 
+    - "✓ 自动营造电影级氛围"
     - "✓ 数秒内完成，极大提升效率"
   - ✅ 三张并列图片展示，每张图下方配"立即免费体验"按钮
   - ✅ 响应式设计，移动端自动切换为单列布局
@@ -113,7 +113,7 @@
   - ✅ `src/app/auth/` - 认证路由
   - ✅ `src/app/dashboard/` - 仪表板
   - ✅ `src/app/terms/`, `src/app/resources/`, `src/app/refund/`, `src/app/privacy/` - 全局页面
-- **修复效果**: 
+- **修复效果**:
   - 🎯 页面现在可以正常访问 (http://localhost:3000)
   - 🎯 中文默认语言正常工作 (访问 `/` 显示中文)
   - 🎯 英文切换正常工作 (访问 `/en` 显示英文)
@@ -876,7 +876,7 @@ FluxKontext.space是一个功能完整的AI图像生成平台，具有：
 如需技术支持或有任何问题，请查看：
 - 📄 PAYMENT_SECURITY_GUIDE.md - 支付安全指南
 - 📄 env.example - 环境变量配置示例
-- 📁 scripts/ - 各种检查和设置脚本 
+- 📁 scripts/ - 各种检查和设置脚本
 
 ## 🏗️ 建筑效果图生成功能
 
@@ -915,4 +915,17 @@ FAL_KEY=your_fal_api_key_here
 FAL_SECRET_KEY=your_fal_secret_key_here
 ```
 
-可以在[fal.ai](https://fal.ai)注册账户并获取API密钥。 
+可以在[fal.ai](https://fal.ai)注册账户并获取API密钥。
+
+---
+
+## 🚨 故障排查 (Troubleshooting)
+
+### 问题: 登录/注册页面返回 404 错误
+
+- **现象**: 访问 `/auth/signin` 或 `/auth/signup` 页面时，服务器返回 404 Not Found 错误。
+- **根本原因**: 项目采用了 `next-intl` 进行国际化（i18n）路由管理，核心路由结构为 `src/app/[locale]/...`。根据项目设计文档 (`docs/Next-intl 中英文国际化实施方案.md`)，所有用户页面（包括认证页面）都应纳入此国际化体系。然而，`auth` 目录被错误地放置在了 `src/app/auth`，位于 `[locale]` 动态路由之外，导致 `next-intl` 的中间件无法正确解析路由。
+- **解决方案**:
+  1.  **迁移认证页面**: 将 `src/app/auth` 目录及其所有内容移动到 `src/app/[locale]/auth` 目录下，使其成为国际化路由的一部分。
+  2.  **更新中间件**: 修改 `src/middleware.ts` 文件，将 `/auth/signin` 和 `/auth/signup` 等路径从 `publicRoutes` (公共路由) 数组中移除。这确保了中间件会将这些路径视为需要语言前缀的普通页面。
+- **最终效果**: 认证页面现在可以通过带语言前缀的 URL 正确访问，例如 `http://localhost:3000/zh/auth/signin`。
