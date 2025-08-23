@@ -1,8 +1,8 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
-import { NextResponse } from 'next/server'
+import { type NextRequest, NextResponse } from 'next/server'
 import { cookies } from 'next/headers'
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
   // if "next" is in param, use it as the redirect URL
@@ -19,10 +19,20 @@ export async function GET(request: Request) {
             return cookieStore.get(name)?.value
           },
           set(name: string, value: string, options: CookieOptions) {
-            cookieStore.set({ name, value, ...options })
+            // The `set` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing
+            // user sessions.
+            try {
+              cookieStore.set({ name, value, ...options })
+            } catch (error) {}
           },
           remove(name: string, options: CookieOptions) {
-            cookieStore.delete({ name, ...options })
+            // The `delete` method was called from a Server Component.
+            // This can be ignored if you have middleware refreshing
+            // user sessions.
+            try {
+              cookieStore.delete({ name, ...options })
+            } catch (error) {}
           },
         },
       }
@@ -34,5 +44,6 @@ export async function GET(request: Request) {
   }
 
   // return the user to an error page with instructions
+  console.error('Authentication callback error: Invalid code');
   return NextResponse.redirect(`${origin}/auth/error`)
 }
