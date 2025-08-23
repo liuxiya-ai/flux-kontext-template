@@ -119,7 +119,7 @@ export function SignInContent() {
             {t('noAccount')}{" "}
             <Link
               href="/auth/signup"
-              className="font-medium text-primary hover:text-primary/80 transition-colors"
+              className="font-medium text-primary hover:text-primary/80 transition-colors underline"
             >
               {t('createNewAccount')}
             </Link>

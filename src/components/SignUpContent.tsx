@@ -145,7 +145,7 @@ export function SignUpContent() {
             {t('or')}{" "}
             <Link
               href="/auth/signin"
-              className="font-medium text-primary hover:text-primary/80 transition-colors"
+              className="font-medium text-primary hover:text-primary/80 transition-colors underline"
             >
               {t('signInLink')}
             </Link>
