@@ -60,10 +60,16 @@ export function SignUpContent() {
         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
       )
 
+      // 从URL或i18n上下文中获取当前语言，这里假设可以通过window.location获取
+      const locale = window.location.pathname.split('/')[1] || 'en'; // 默认'en'
+      const finalRedirectPath = `/${locale}/generate`;
+
       const { data, error: supabaseError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
+          // 关键：指定验证后的回调地址，并附带最终跳转路径
+          emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${finalRedirectPath}`,
           data: {
             name: formData.name,
           }
