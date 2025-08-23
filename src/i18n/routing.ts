@@ -7,8 +7,8 @@ export const routing = defineRouting({
   // 默认语言为中文
   defaultLocale: 'zh',
   
-  // 路径前缀策略 - 始终显示语言前缀，避免默认语言无前缀导致的404
-  localePrefix: 'always'
+  // 路径前缀策略 - 根据需要添加语言前缀 (默认语言不显示前缀)
+  localePrefix: 'as-needed'
 });
 
 // 导出类型定义供其他文件使用

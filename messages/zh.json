@@ -40,35 +40,6 @@
       }
     ]
   },
-  "whyChooseUs": {
-    "title": "为什么选择我们？",
-    "items": [
-      {
-        "title": "保障方案的一致性",
-        "description": "我们的智能算法能够理解您的创作意图，确保从概念到最终渲染的整个过程中，设计风格和方案保持高度一致。",
-        "image": "/images/modules/interior.webp",
-        "alt": "保障方案的一致性"
-      },
-      {
-        "title": "几分钟内出图",
-        "description": "告别漫长的渲染等待。我们高效的AI引擎能够在几分钟内生成高质量的效果图，极大提升您的工作效率。",
-        "image": "/images/modules/exterior.webp",
-        "alt": "几分钟内出图"
-      },
-      {
-        "title": "极简的用户操作",
-        "description": "无需复杂的参数设置和学习过程。只需上传您的模型或草图，选择风格，即可一键生成专业级渲染图。",
-        "image": "/images/examples/inspire-output.webp",
-        "alt": "极简的用户操作"
-      },
-      {
-        "title": "高质量渲染大图",
-        "description": "我们支持导出高分辨率的大尺寸图像，满足您在客户演示、作品集展示和印刷品制作中的所有需求。",
-        "image": "/images/features/interior-ai-render-main.webp",
-        "alt": "高质量渲染大图"
-      }
-    ]
-  },
   "howTo": {
     "title": "如何通过4个简单步骤创建建筑渲染图",
     "description": "按照这些简单步骤，使用AIRender AI平台创建专业的建筑可视化效果。",

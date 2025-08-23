@@ -15,22 +15,27 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({
   children,
-  params
+  params: {locale}
 }: {
   children: React.ReactNode;
-  params: Promise<{locale: string}>;
+  params: {locale: string};
 }) {
   // 确保传入的 `locale` 有效
-  const {locale} = await params;
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
   // 启用静态渲染
   setRequestLocale(locale);
-  
-  // 加载翻译消息
-  const messages = (await import(`../../../messages/${locale}.json`)).default;
+
+  // 加载翻译消息，并增加错误处理
+  let messages;
+  try {
+    messages = (await import(`../../../messages/${locale}.json`)).default;
+  } catch (error) {
+    console.error(`Failed to load messages for locale: ${locale}`, error);
+    messages = {}; // 提供一个空对象以避免应用崩溃
+  }
 
   return (
     <SessionProvider>
