@@ -68,8 +68,9 @@ export function SignUpContent() {
         email: formData.email,
         password: formData.password,
         options: {
-          // 关键：指定验证后的回调地址，并附带最终跳转路径
-          emailRedirectTo: `${window.location.origin}/api/auth/callback?next=${finalRedirectPath}`,
+          // 关键：直接指定验证后用户需要跳转到的最终页面
+          // Supabase 会在用户访问此链接时自动处理会话创建
+          emailRedirectTo: `${window.location.origin}${finalRedirectPath}`,
           data: {
             name: formData.name,
           }
