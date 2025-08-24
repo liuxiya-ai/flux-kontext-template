@@ -62,15 +62,13 @@ export function SignUpContent() {
 
       // 从URL或i18n上下文中获取当前语言，这里假设可以通过window.location获取
       const locale = window.location.pathname.split('/')[1] || 'en'; // 默认'en'
-      const finalRedirectPath = `/${locale}/generate`;
-
       const { data, error: supabaseError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
-          // 关键：直接指定验证后用户需要跳转到的最终页面
-          // Supabase 会在用户访问此链接时自动处理会话创建
-          emailRedirectTo: `${window.location.origin}${finalRedirectPath}`,
+          // 关键：将回调地址指向我们新创建的客户端回调页面
+          // 这个页面会处理会话并进行最终的重定向
+          emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/${locale}/auth/callback`,
           data: {
             name: formData.name,
           }
