@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { Link } from "@/i18n/navigation"
 import { createClient } from '@supabase/supabase-js'
 import { useTranslations } from 'next-intl'
+import { StandardTurnstile } from "@/components/StandardTurnstile"
 
 export function SignUpContent() {
   const t = useTranslations('auth.signup');
@@ -19,6 +20,7 @@ export function SignUpContent() {
   const [error, setError] = useState("")
   const [success, setSuccess] = useState("")
   const [isClient, setIsClient] = useState(false)
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null)
   const router = useRouter()
 
   // 确保只在客户端渲染
@@ -53,6 +55,12 @@ export function SignUpContent() {
       return
     }
 
+    if (!turnstileToken) {
+      setError(t('captchaRequired'))
+      setIsLoading(false)
+      return
+    }
+
     try {
       // 🚀 使用Supabase注册（自带邮箱验证）
       const supabase = createClient(
@@ -66,14 +74,13 @@ export function SignUpContent() {
         email: formData.email,
         password: formData.password,
         options: {
-          // 关键：将回调地址指向我们新创建的客户端回调页面
-          // 这个页面会处理会话并进行最终的重定向
           emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/${locale}/auth/callback`,
           data: {
             name: formData.name,
-          }
-        }
-      })
+          },
+          captchaToken: turnstileToken,
+        },
+      });
 
       if (supabaseError) {
         throw new Error(supabaseError.message)
